@@ -19,7 +19,7 @@ It is working fast as it relies on the build-in double buffering approach in and
 
 Of course, it supports Camera view and related features. The camera representation supports static camera (like in Gravity and Balloons games) as well as moving camera (like in the Maze game)
 
-# Exemplary games, uploaded to various App Stores, which has this Framework as dependency:
+# Exemplary games, uploaded to various App Stores, which use this Framework and has its dependency:
   - https://metatransapps.com/gravity-force-finger-137-cross-the-orbits/
   - https://metatransapps.com/non-stop-balloons-shooter-for-kids-and-adults/
   - https://metatransapps.com/maze-runner-2d-old-school-labyrinth-offline-game/
