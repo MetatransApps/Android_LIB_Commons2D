@@ -13,7 +13,7 @@ Not powerful as Unity 3D or similar frameworks, but still enough to build old sc
 
 # How it works? Implementation details ...
 
-It works on low level by drawing pixels, lines, circles, bitmaps/images on **android.graphics.Canvas** https://developer.android.com/reference/android/graphics/Canvas
+It works on low level by drawing pixels, lines, circles, bitmaps/images on [android.graphics.Canvas](https://developer.android.com/reference/android/graphics/Canvas)
 Also painting and filling out shapes with given color.
 It is working fast as it relies on the build-in double buffering approach in **android.graphics.***
 
