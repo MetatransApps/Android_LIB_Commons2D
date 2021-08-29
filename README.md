@@ -15,7 +15,7 @@ Not powerful as Unity 3D or similar frameworks, but still enough to build old sc
 
 It works on low level by drawing pixels, lines, circles, bitmaps/images on android.graphics.Canvas https://developer.android.com/reference/android/graphics/Canvas
 Also painting and filling out shapes with given color.
-It is working fast as it rely on the build-in double buffering approach in android.graphics.*
+It is working fast as it relies on the build-in double buffering approach in android.graphics.*
 
 Of course, it supports Camera view and related features. The camera representation supports static camera (like in Gravity and Balloons games) as well as moving camera (like in the Maze game)
 
