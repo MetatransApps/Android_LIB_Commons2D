@@ -10,7 +10,7 @@ Not powerful as Unity or similar, but still enough to build old school 2D games.
 It works on low level by painting pixels, lines, cyrcles, bitmaps/images and filling shapes with color.
 Also it handles camera view and other necessary and important features.
 
-For example, we have use it at Metatrans Apps in the developemnt of thease 2D games:
+For example, we have use it at Metatrans Apps in the development of thease 2D games:
   - https://metatransapps.com/gravity-force-finger-137-cross-the-orbits/
   - https://metatransapps.com/non-stop-balloons-shooter-for-kids-and-adults/
   - https://metatransapps.com/maze-runner-2d-old-school-labyrinth-offline-game/
