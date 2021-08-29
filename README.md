@@ -26,5 +26,5 @@ Of course, it supports Camera view and related features. The camera representati
   
 # How to extend it and use it for game development?
 Here are 2 examples:
-  - https://github.com/MetatransApps/Android_LIB_2DGravity
-  - https://github.com/MetatransApps/Android_LIB_2DBalloons
+  - https://github.com/MetatransApps/Android_LIB_2DGravity com.gravityplay.model.WorldGenerator_Gravity.java
+  - https://github.com/MetatransApps/Android_LIB_2DBalloons com.stoptheballs.model.WorldGenerator_StopTheBalls.java
