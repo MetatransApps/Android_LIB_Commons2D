@@ -5,7 +5,7 @@ The license is GPL-2.0-only
 # Overview
 
 This is a simple 2D Graphics Framework.
-The repository for Android, could be imported directly, after git clone, to Android Studio.
+After git clone, this library for Android, could be imported directly to Android Studio. Than it can be extended and used in Java programming language from your Android projects.
 
 It represents a library, which is simple, light and small, without any other dependencies.
 
