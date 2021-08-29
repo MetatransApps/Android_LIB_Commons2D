@@ -13,9 +13,9 @@ Not powerful as Unity 3D or similar frameworks, but still enough to build old sc
 
 # How it works? Implementation details ...
 
-It works on low level by drawing pixels, lines, circles, bitmaps/images on android.graphics.Canvas https://developer.android.com/reference/android/graphics/Canvas
+It works on low level by drawing pixels, lines, circles, bitmaps/images on **android.graphics.Canvas** https://developer.android.com/reference/android/graphics/Canvas
 Also painting and filling out shapes with given color.
-It is working fast as it relies on the build-in double buffering approach in android.graphics.*
+It is working fast as it relies on the build-in double buffering approach in **android.graphics.***
 
 Of course, it supports Camera view and related features. The camera representation supports static camera (like in Gravity and Balloons games) as well as moving camera (like in the Maze game)
 
@@ -26,5 +26,5 @@ Of course, it supports Camera view and related features. The camera representati
   
 # How to extend it and use it for game development?
 Here are 2 examples:
-  - https://github.com/MetatransApps/Android_LIB_2DGravity, search for com.gravityplay.model.WorldGenerator_Gravity.java
-  - https://github.com/MetatransApps/Android_LIB_2DBalloons, search for com.stoptheballs.model.WorldGenerator_StopTheBalls.java
+  - https://github.com/MetatransApps/Android_LIB_2DGravity, search for **com.gravityplay.model.WorldGenerator_Gravity.java**
+  - https://github.com/MetatransApps/Android_LIB_2DBalloons, search for **com.stoptheballs.model.WorldGenerator_StopTheBalls.java**
