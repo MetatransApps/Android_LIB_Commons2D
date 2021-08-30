@@ -4,7 +4,6 @@ package com.apps.mobile.android.commons.graphics2d.model;
 import java.io.Serializable;
 import java.util.List;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
