@@ -269,7 +269,7 @@ public abstract class View_Main_Base extends View_Surface_Base {
 		
 		view_leaderboards = (View_Achievements_And_Leaderboards_Base) _view_leaderboards;
 		
-		Application_Base.getInstance().getEngagementProvider().getLeaderboardsProvider().setEnabled(true);
+		//Application_Base.getInstance().getEngagementProvider().getLeaderboardsProvider().setEnabled(true);
 	}
 	
 	

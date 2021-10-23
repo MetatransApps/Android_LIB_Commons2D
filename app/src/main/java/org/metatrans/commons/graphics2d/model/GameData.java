@@ -19,8 +19,8 @@ public class GameData extends GameData_Base {
 	public int count_steps;
 	public int total_count_steps;
 	public int last_count_stars;
-	//public int last_count_steps;
-	
+	public int count_killed_balls;
+
 	public boolean paused;
 	
 	public boolean level_completed;

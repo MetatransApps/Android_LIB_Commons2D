@@ -8,10 +8,13 @@ import java.util.concurrent.Executors;
 import org.metatrans.commons.Activity_Base_Ads_Banner;
 import org.metatrans.commons.ads.api.IAdsConfiguration;
 import org.metatrans.commons.app.Application_Base;
+import org.metatrans.commons.app.Application_Base_Ads;
 import org.metatrans.commons.cfg.colours.ConfigurationUtils_Colours;
 import org.metatrans.commons.cfg.colours.IConfigurationColours;
 import org.metatrans.commons.events.api.IEventsManager;
 import org.metatrans.commons.graphics2d.app.Application_2D_Base;
+import org.metatrans.commons.graphics2d.model.GameData;
+import org.metatrans.commons.graphics2d.model.UserSettings;
 
 import com.commons2d.R;
 
@@ -20,6 +23,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -46,12 +50,19 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 		super.onCreate(savedInstanceState);
 		
 	    requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); 
 	    
 		initUI();
 	}
-	
-	
+
+
+	@Override
+	protected int getGravity() {
+		return Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+	}
+
+
 	private void initUI() {
 		
 		setContentView(R.layout.main_frame);
@@ -96,6 +107,7 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 		isActivityActive = true;
 		
 		executor = Executors.newCachedThreadPool();
+
 		uiHandler = new Handler(Looper.getMainLooper());
 		
 		
@@ -181,11 +193,18 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 	
 	
 	public void startNewGame() {
-		
+
+		GameData gamedata = (GameData) ((Application_Base) getApplication()).getGameData();
+
+		//UserSettings settings = (UserSettings) ((Application_Base) getApplication()).getUserSettings();
+
 		IEventsManager eventsManager = Application_Base.getInstance().getEventsManager();
-		eventsManager.handleGameEvents_OnExit(this, ((Application_Base)getApplication()).getGameData(), ((Application_Base)getApplication()).getUserSettings());
+
+		eventsManager.handleGameEvents_OnExit(this, gamedata, ((Application_Base)getApplication()).getUserSettings());
 		
 		Application_2D_Base.getInstance().recreateGameDataObject();
+
+		Application_Base_Ads.getInstance().openInterstitial();
 	}
 	
 	
