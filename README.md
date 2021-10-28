@@ -26,10 +26,10 @@ Of course, it supports Camera view and related features. The camera representati
 
 # How to extend it and use it for game development?
 Here are 2 examples, which you could find in the model package of these projects:
-  - https://github.com/MetatransApps/Android_APP_2DGravity, search for **WorldGenerator_Gravity.java **
+  - [static camera] https://github.com/MetatransApps/Android_APP_2DGravity, search for **WorldGenerator_Gravity.java **
 
-  - https://github.com/MetatransApps/Android_APP_2DBalloons, search for **WorldGenerator_StopTheBalls.java**
+  - [static camera] https://github.com/MetatransApps/Android_APP_2DBalloons, search for **WorldGenerator_StopTheBalls.java**
 
-  - https://github.com/MetatransApps/Android_APP_2DMaze, search for **WorldGenerator_Labyrints.java**
+  - [moving camera] https://github.com/MetatransApps/Android_APP_2DMaze, search for **WorldGenerator_Labyrints.java**
 
     
