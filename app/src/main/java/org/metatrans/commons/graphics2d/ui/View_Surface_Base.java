@@ -194,7 +194,7 @@ public class View_Surface_Base extends SurfaceView implements SurfaceHolder.Call
         	
 	        //Looper.prepare();
 			
-        	final int UPDATE_INTERVAL = 33;//17 in ms
+        	final int UPDATE_INTERVAL = 27;//17 in ms
         	
             while (running) {
             	

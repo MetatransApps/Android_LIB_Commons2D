@@ -155,6 +155,7 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 		collectibleEntities_buffer.addAll(collectibleEntities);
 		
 		for (Entity2D_Collectible cur: collectibleEntities_buffer) {
+			
 			if (RectF.intersects(getEvelop(), cur.getEvelop())) {
 				
 				getWorld().removeCollectibleEntity(cur);
