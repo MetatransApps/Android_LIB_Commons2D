@@ -20,18 +20,18 @@ public abstract class Entity2D_Base implements IEntity2D {
 	private float evelop_right;
 	private float evelop_bottom;
 	
-	private transient RectF evelop;
+	private transient RectF envelop;
 	private transient Paint paint;
 	
 	
 	public Entity2D_Base(RectF _evelop, int _subtype) {
 		
-		evelop = _evelop;
+		envelop = _evelop;
 		
-		evelop_left = evelop.left;
-		evelop_top = evelop.top;
-		evelop_right = evelop.right;
-		evelop_bottom = evelop.bottom;
+		evelop_left = envelop.left;
+		evelop_top = envelop.top;
+		evelop_right = envelop.right;
+		evelop_bottom = envelop.bottom;
 		
 		subtype = _subtype;
 
@@ -61,21 +61,21 @@ public abstract class Entity2D_Base implements IEntity2D {
 	}
 	
 	
-	public RectF getEvelop() {
-		if (evelop == null) {
-			evelop = new RectF(evelop_left, evelop_top, evelop_right, evelop_bottom);
+	public RectF getEnvelop() {
+		if (envelop == null) {
+			envelop = new RectF(evelop_left, evelop_top, evelop_right, evelop_bottom);
 		}
-		return evelop;
+		return envelop;
 	}
 	
 	
 	public float getX() {
-		return getEvelop().left;
+		return getEnvelop().left;
 	}
 	
 	
 	public float getY() {
-		return getEvelop().top;
+		return getEnvelop().top;
 	}
 	
 	
@@ -86,13 +86,13 @@ public abstract class Entity2D_Base implements IEntity2D {
 		if (b_color != -1) {
 			getPaint().setColor(b_color);
 			getPaint().setAlpha(255);
-			c.drawRect(getEvelop(), getPaint());
+			c.drawRect(getEnvelop(), getPaint());
 		}
 
 		
 		if (getBitmap() != null) {
 			getPaint().setAlpha(getBitmapTransparency());
-			c.drawBitmap(getBitmap(), null, getEvelop(), getPaint());
+			c.drawBitmap(getBitmap(), null, getEnvelop(), getPaint());
 		}
 	}
 

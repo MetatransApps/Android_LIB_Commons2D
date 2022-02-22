@@ -32,7 +32,7 @@ public interface IEntity2D extends Serializable {
 	
 	public int getType();
 	public int getSubType();
-	public RectF getEvelop();
+	public RectF getEnvelop();
 	public void draw(Canvas canvas);
 	public boolean isSolid();
 }

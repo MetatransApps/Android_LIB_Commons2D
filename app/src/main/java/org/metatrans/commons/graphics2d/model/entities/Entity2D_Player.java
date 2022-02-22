@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.metatrans.commons.app.Application_Base;
-import org.metatrans.commons.app.Application_Base_Ads;
 import org.metatrans.commons.events.api.IEventsManager;
 import org.metatrans.commons.graphics2d.app.Application_2D_Base;
 import org.metatrans.commons.graphics2d.model.GameData;
@@ -13,7 +12,6 @@ import org.metatrans.commons.graphics2d.model.UserSettings;
 import org.metatrans.commons.graphics2d.model.World;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
@@ -156,7 +154,7 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 		
 		for (Entity2D_Collectible cur: collectibleEntities_buffer) {
 			
-			if (RectF.intersects(getEvelop(), cur.getEvelop())) {
+			if (RectF.intersects(getEnvelop(), cur.getEnvelop())) {
 				
 				getWorld().removeCollectibleEntity(cur);
 				

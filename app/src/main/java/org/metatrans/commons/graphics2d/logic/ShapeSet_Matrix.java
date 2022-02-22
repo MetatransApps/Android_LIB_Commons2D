@@ -33,17 +33,17 @@ public class ShapeSet_Matrix implements IShapeSet {
 		float max_y = Float.MIN_VALUE;
 		
 		for (IEntity2D cur: _all) {
-			if (min_x > cur.getEvelop().left) {
-				min_x = cur.getEvelop().left;
+			if (min_x > cur.getEnvelop().left) {
+				min_x = cur.getEnvelop().left;
 			}
-			if (max_x < cur.getEvelop().right) {
-				max_x = cur.getEvelop().right;
+			if (max_x < cur.getEnvelop().right) {
+				max_x = cur.getEnvelop().right;
 			}
-			if (min_y > cur.getEvelop().top) {
-				min_y = cur.getEvelop().top;
+			if (min_y > cur.getEnvelop().top) {
+				min_y = cur.getEnvelop().top;
 			}
-			if (max_y < cur.getEvelop().bottom) {
-				max_y = cur.getEvelop().bottom;
+			if (max_y < cur.getEnvelop().bottom) {
+				max_y = cur.getEnvelop().bottom;
 			}
 		}
 		
@@ -62,7 +62,7 @@ public class ShapeSet_Matrix implements IShapeSet {
 				matrix_entities[x][y] 	= new ArrayList<IEntity2D>();
 				
 				for (IEntity2D cur: _all) {
-					if (RectF.intersects(cur.getEvelop(), matrix_rects[x][y])) {
+					if (RectF.intersects(cur.getEnvelop(), matrix_rects[x][y])) {
 						matrix_entities[x][y].add(cur);
 					}
 				}
@@ -84,7 +84,7 @@ public class ShapeSet_Matrix implements IShapeSet {
 					
 					List<IEntity2D> bucket = matrix_entities[x][y];
 					for (IEntity2D cur: bucket) {
-						if (RectF.intersects(cur.getEvelop(), test)) {
+						if (RectF.intersects(cur.getEnvelop(), test)) {
 							result.add(cur);
 							if (stop_after_first) return; 
 						}

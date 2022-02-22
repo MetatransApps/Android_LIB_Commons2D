@@ -27,9 +27,6 @@ public class Entity2D_Moving extends Entity2D_Base {
 	private List<? extends IEntity2D> blockerEntities;
 	private List<? extends IEntity2D> killerEntities;
 	
-	//private int movingHistorySize = 3;
-	//private List<PointF> movingHistory;
-	
 	
 	private transient RectF test_newposition;
 	
@@ -106,7 +103,7 @@ public class Entity2D_Moving extends Entity2D_Base {
 		
 		if (killerEntities != null) {
 			for (IEntity2D killer: killerEntities) {
-				if (RectF.intersects(getEvelop(), killer.getEvelop())) {
+				if (RectF.intersects(getEnvelop(), killer.getEnvelop())) {
 					killed();
 					return;
 				}
@@ -129,7 +126,7 @@ public class Entity2D_Moving extends Entity2D_Base {
 				
 				new_DX += incDX;
 				
-				getTest_newposition().set(getEvelop());
+				getTest_newposition().set(getEnvelop());
 				getTest_newposition().offset(new_DX, new_DY);
 				
 				boolean ok = notIntersectsWithBlockers(getTest_newposition());
@@ -157,7 +154,7 @@ public class Entity2D_Moving extends Entity2D_Base {
 				
 				new_DY += incDY;
 				
-				getTest_newposition().set(getEvelop());
+				getTest_newposition().set(getEnvelop());
 				getTest_newposition().offset(new_DX, new_DY);
 				
 				boolean ok = notIntersectsWithBlockers(getTest_newposition());
@@ -180,23 +177,23 @@ public class Entity2D_Moving extends Entity2D_Base {
 		//System.out.println("RATE: " + (col/(float)all));
 		
 		//test inside world
-		if (getEvelop().left + new_DX < 0) {
-			new_DX = -getEvelop().left;
+		if (getEnvelop().left + new_DX < 0) {
+			new_DX = -getEnvelop().left;
 			clearDx();
 			groundContact_X();
 		}
-		if (getEvelop().right + new_DX > WORLD_SIZE_X) {
-			new_DX = WORLD_SIZE_X - getEvelop().right;
+		if (getEnvelop().right + new_DX > WORLD_SIZE_X) {
+			new_DX = WORLD_SIZE_X - getEnvelop().right;
 			clearDx();
 			groundContact_X();
 		}
-		if (getEvelop().top + new_DY < 0) {
-			new_DY = -getEvelop().top;
+		if (getEnvelop().top + new_DY < 0) {
+			new_DY = -getEnvelop().top;
 			clearDy();
 			groundContact_Y();
 		}
-		if (getEvelop().bottom + new_DY > WORLD_SIZE_Y) {
-			new_DY = WORLD_SIZE_Y - getEvelop().bottom;
+		if (getEnvelop().bottom + new_DY > WORLD_SIZE_Y) {
+			new_DY = WORLD_SIZE_Y - getEnvelop().bottom;
 			clearDy();
 			groundContact_Y();
 		}
@@ -204,7 +201,7 @@ public class Entity2D_Moving extends Entity2D_Base {
 		
 		if (new_DX != 0f || new_DY != 0f) {
 			
-			getEvelop().offset(new_DX, new_DY);
+			getEnvelop().offset(new_DX, new_DY);
 			
 			/*
 			movingHistory.add(new PointF(new_DX, new_DY));

@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.metatrans.commons.app.Application_Base;
-import org.metatrans.commons.app.Application_Base_Ads;
 import org.metatrans.commons.cfg.colours.ConfigurationUtils_Colours;
-import org.metatrans.commons.cfg.colours.IConfigurationColours;
 import org.metatrans.commons.graphics2d.logic.IShapeSet;
 import org.metatrans.commons.graphics2d.logic.ShapeSet_Quad;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Collectible;
@@ -20,7 +18,6 @@ import org.metatrans.commons.ui.utils.ScreenUtils;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
@@ -229,18 +226,18 @@ public class World implements IWorld {
 		}
 		
 		
-		if (entity.getEvelop().left < minX) {
-			minX = entity.getEvelop().left;
+		if (entity.getEnvelop().left < minX) {
+			minX = entity.getEnvelop().left;
 		}
-		if (entity.getEvelop().right > maxX) {
-			maxX = entity.getEvelop().right;
+		if (entity.getEnvelop().right > maxX) {
+			maxX = entity.getEnvelop().right;
 		}
 		
-		if (entity.getEvelop().top < minY) {
-			minY = entity.getEvelop().top;
+		if (entity.getEnvelop().top < minY) {
+			minY = entity.getEnvelop().top;
 		}
-		if (entity.getEvelop().bottom > maxY) {
-			maxY = entity.getEvelop().bottom;
+		if (entity.getEnvelop().bottom > maxY) {
+			maxY = entity.getEnvelop().bottom;
 		}
 		
 		WORLD_SIZE_X = maxX - minX;
@@ -299,7 +296,7 @@ public class World implements IWorld {
 		
 		for (int i=0; i<collectibleEntities.size(); i++) {
 			IEntity2D entity = collectibleEntities.get(i);
-			if (isInsideCamera(entity.getEvelop())) {
+			if (isInsideCamera(entity.getEnvelop())) {
 				entity.draw(canvas);
 			}
 		}
@@ -311,14 +308,14 @@ public class World implements IWorld {
 				continue;
 			}
 			
-			if (isInsideCamera(entity.getEvelop())) {				
+			if (isInsideCamera(entity.getEnvelop())) {
 				entity.draw(canvas);	
 			}
 		}
 		
 		for (int i=0; i<specialEntities.size(); i++) {
 			IEntity2D entity = specialEntities.get(i);
-			if (isInsideCamera(entity.getEvelop())) {
+			if (isInsideCamera(entity.getEnvelop())) {
 				entity.draw(canvas);	
 			}
 		}
@@ -487,8 +484,8 @@ public class World implements IWorld {
 	private void updateCamera() {
 		
 		
-		float camX = playerEntity.getX() + (playerEntity.getEvelop().right - playerEntity.getEvelop().left) / 2 - VIEWPORT_SIZE_X / 2;
-		float camY = playerEntity.getY() + (playerEntity.getEvelop().bottom - playerEntity.getEvelop().top) / 2 - VIEWPORT_SIZE_Y / 2;
+		float camX = playerEntity.getX() + (playerEntity.getEnvelop().right - playerEntity.getEnvelop().left) / 2 - VIEWPORT_SIZE_X / 2;
+		float camY = playerEntity.getY() + (playerEntity.getEnvelop().bottom - playerEntity.getEnvelop().top) / 2 - VIEWPORT_SIZE_Y / 2;
 		
 		
 		if (camX > offsetMaxX) {

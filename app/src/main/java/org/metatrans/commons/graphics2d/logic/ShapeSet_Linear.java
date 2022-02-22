@@ -25,7 +25,7 @@ public class ShapeSet_Linear implements IShapeSet {
 	@Override
 	public void intersect(List<IEntity2D> result, RectF test, boolean stop_after_first) {
 		for (IEntity2D cur: all) {
-			if (RectF.intersects(cur.getEvelop(), test)) {
+			if (RectF.intersects(cur.getEnvelop(), test)) {
 				result.add(cur);
 				if (stop_after_first) return; 
 			}
