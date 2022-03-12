@@ -24,8 +24,13 @@ public abstract class Application_2D_Base extends Application_Base_Ads {
 	public abstract void setNextLevel();
 	
 	public abstract IWorld createNewWorld();
-	
-	
+
+
+	public IWorld getWorld() {
+		return ((GameData) getInstance().getGameData()).world;
+	}
+
+
 	public static Application_2D_Base getInstance() {
 		return (Application_2D_Base) Application_Base_Ads.getInstance();
 	}
