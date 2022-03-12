@@ -62,13 +62,22 @@ public abstract class Entity2D_Base implements IEntity2D {
 	
 	
 	public RectF getEnvelop() {
+
 		if (envelop == null) {
+
 			envelop = new RectF(evelop_left, evelop_top, evelop_right, evelop_bottom);
 		}
+
 		return envelop;
 	}
-	
-	
+
+
+	public RectF getEnvelop_ForDraw() {
+
+		return getEnvelop();
+	}
+
+
 	public float getX() {
 		return getEnvelop().left;
 	}
@@ -86,13 +95,13 @@ public abstract class Entity2D_Base implements IEntity2D {
 		if (b_color != -1) {
 			getPaint().setColor(b_color);
 			getPaint().setAlpha(255);
-			c.drawRect(getEnvelop(), getPaint());
+			c.drawRect(getEnvelop_ForDraw(), getPaint());
 		}
 
 		
 		if (getBitmap() != null) {
 			getPaint().setAlpha(getBitmapTransparency());
-			c.drawBitmap(getBitmap(), null, getEnvelop(), getPaint());
+			c.drawBitmap(getBitmap(), null, getEnvelop_ForDraw(), getPaint());
 		}
 	}
 

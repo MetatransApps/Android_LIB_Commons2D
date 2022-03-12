@@ -23,10 +23,12 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 	
 	
 	private List<Entity2D_Collectible> collectibleEntities;
+
 	private List<Entity2D_Collectible> collectibleEntities_buffer;
+
 	private List<Entity2D_Collectible> collectedEntities;
-	
-	
+
+
 	public Entity2D_Player(World _world, RectF _evelop, List<? extends IEntity2D> blockersEntities, List<? extends IEntity2D> _killerEntities) {
 		
 		super(_world, _evelop, SUBTYPE_MOVING_PLAYER, blockersEntities, _killerEntities);
@@ -46,16 +48,21 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 	
 	@Override
 	public void draw(Canvas c) {
+
 		if (isInBornTolerance() && !Application_2D_Base.getInstance().getGameData().paused) {
+
 			if (Math.random() < 0.5f) {
+
 				super.draw(c);
 			}
+
 		} else {
+
 			super.draw(c);
 		}
 	}
-	
-	
+
+
 	@Override
 	protected void killed() {
 		

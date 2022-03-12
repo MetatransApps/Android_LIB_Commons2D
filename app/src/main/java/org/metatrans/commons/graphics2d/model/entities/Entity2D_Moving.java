@@ -14,7 +14,9 @@ public class Entity2D_Moving extends Entity2D_Base {
 	
 	
 	private static final long serialVersionUID = 5936821405527936582L;
-	
+
+	protected static float ENVELOP_DRAW_EXTENSION = 1.15f;
+
 
 	private World world;
 	
@@ -49,8 +51,24 @@ public class Entity2D_Moving extends Entity2D_Base {
 		
 		//movingHistory 		= new ArrayList<PointF>();
 	}
-	
-	
+
+
+	@Override
+	public RectF getEnvelop_ForDraw() {
+
+		RectF rect_org = getEnvelop();
+
+		float width = rect_org.right - rect_org.left;
+		float height = rect_org.bottom - rect_org.top;
+
+		return new RectF(rect_org.left - (width * (ENVELOP_DRAW_EXTENSION - 1)),
+				rect_org.top - (height * (ENVELOP_DRAW_EXTENSION - 1)),
+				rect_org.right + (width * (ENVELOP_DRAW_EXTENSION - 1)),
+				rect_org.bottom + (height * (ENVELOP_DRAW_EXTENSION - 1))
+		);
+	}
+
+
 	@Override
 	public int getType() {
 		return TYPE_MOVING;

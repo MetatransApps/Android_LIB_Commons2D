@@ -12,7 +12,7 @@ public class Entity2D_Challenger extends Entity2D_Moving {
 	
 	
 	private static final long serialVersionUID = -6135971939617929909L;
-	
+
 	
 	private float new_dx;
 	private float new_dy;
@@ -21,8 +21,8 @@ public class Entity2D_Challenger extends Entity2D_Moving {
 	public Entity2D_Challenger(World _world, RectF _evelop, List<Entity2D_Ground> _blockerEntities, List<? extends IEntity2D> _killerEntities) {
 		super(_world, _evelop, SUBTYPE_MOVING_CHALLENGER, _blockerEntities, _killerEntities);
 	}
-	
-	
+
+
 	public void setSpeed(float _dx, float _dy) {
 		
 		super.setSpeed(_dx, _dy);
