@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="menu_joystick">Move Joystick</string>
+    <string name="menu_joystick_moveleft">Left</string>
+    <string name="menu_joystick_moveright">Right</string>
+
+</resources>

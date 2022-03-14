@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.metatrans.commons.graphics2d.menu.IConfigurationJoystick;
 import org.metatrans.commons.model.UserSettings_Base;
 
 
@@ -15,7 +16,9 @@ public class UserSettings extends UserSettings_Base {
 
 	
 	public long best_scores;
-	
+
+	public int movejoystick_side = IConfigurationJoystick.MOVE_RIGHTJOYSTICK;
+
 	
 	public UserSettings() {
 		
