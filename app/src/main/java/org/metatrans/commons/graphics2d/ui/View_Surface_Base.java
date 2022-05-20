@@ -215,9 +215,9 @@ public class View_Surface_Base extends SurfaceView implements SurfaceHolder.Call
                     } catch(InterruptedException e) {
                     	//Do nothing
                     }
-	                
-	                timePrevFrame = System.currentTimeMillis();
-	                
+
+					timePrevFrame = System.currentTimeMillis();
+
 	            	Canvas c = null;
 	                try {
 	                	

@@ -6,6 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
+import org.metatrans.commons.graphics2d.model.IWorld;
+import org.metatrans.commons.graphics2d.model.World;
+
 
 public abstract class Entity2D_Base implements IEntity2D {
 	
@@ -22,10 +25,14 @@ public abstract class Entity2D_Base implements IEntity2D {
 	
 	private transient RectF envelop;
 	private transient Paint paint;
+
+	protected IWorld world;
+
 	
-	
-	public Entity2D_Base(RectF _evelop, int _subtype) {
-		
+	public Entity2D_Base(IWorld _world, RectF _evelop, int _subtype) {
+
+		world = _world;
+
 		envelop = _evelop;
 		
 		evelop_left = envelop.left;

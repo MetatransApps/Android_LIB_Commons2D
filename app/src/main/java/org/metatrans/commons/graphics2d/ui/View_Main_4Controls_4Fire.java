@@ -85,7 +85,8 @@ public abstract class View_Main_4Controls_4Fire extends View_Main_Base {
 		rect_control_arrows_left = new RectF(control_joystick_left_X - bitmap3_size, control_joystick_left_Y - bitmap3_size, control_joystick_left_X + bitmap3_size, control_joystick_left_Y + bitmap3_size);
 		rect_control_arrows_right = new RectF(control_joystick_right_X - bitmap3_size, control_joystick_right_Y - bitmap3_size, control_joystick_right_X + bitmap3_size, control_joystick_right_Y + bitmap3_size);
 
-		control_arrows_bitmap = BitmapUtils.fromResource(Application_Base.getInstance(), R.drawable.joystick_transparent);
+		//control_arrows_bitmap = BitmapUtils.fromResource(Application_Base.getInstance(), R.drawable.joystick_transparent);
+		control_arrows_bitmap = BitmapUtils.fromResource(Application_Base.getInstance(), R.drawable.joystick_full);
 	}
 	
 	
@@ -99,8 +100,8 @@ public abstract class View_Main_4Controls_4Fire extends View_Main_Base {
 			//Draw Controls
 			getDefaultPaint().setColor(Color.BLUE);
 			getDefaultPaint().setAlpha(30);
-			canvas.drawCircle(control_joystick_right_X, control_joystick_right_Y, control_joystick_right_R,	getDefaultPaint());
-			canvas.drawCircle(control_joystick_left_X,	control_joystick_left_Y, control_joystick_left_R,	getDefaultPaint());
+			//canvas.drawCircle(control_joystick_right_X, control_joystick_right_Y, control_joystick_right_R,	getDefaultPaint());
+			//canvas.drawCircle(control_joystick_left_X,	control_joystick_left_Y, control_joystick_left_R,	getDefaultPaint());
 
 			getDefaultPaint().setAlpha(70);
 			canvas.drawBitmap(getBitmapControl_Arrows(), 	null, rect_control_arrows_left, getDefaultPaint());

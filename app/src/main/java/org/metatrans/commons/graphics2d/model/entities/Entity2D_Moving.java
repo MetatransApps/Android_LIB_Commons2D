@@ -4,7 +4,6 @@ package org.metatrans.commons.graphics2d.model.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.metatrans.commons.graphics2d.logic.IShapeSet;
 import org.metatrans.commons.graphics2d.model.World;
 
 import android.graphics.RectF;
@@ -15,10 +14,9 @@ public class Entity2D_Moving extends Entity2D_Base {
 	
 	private static final long serialVersionUID = 5936821405527936582L;
 
-	protected static float ENVELOP_DRAW_EXTENSION = 1.15f;
-
-
-	private World world;
+	protected static float ENVELOP_DRAW_EXTENSION = 1.3f;
+	protected static float ENVELOP_DRAW_UPSIDE 	  = 0.65f;
+	protected static float ENVELOP_DRAW_DOWNSIDE  = 1 - ENVELOP_DRAW_UPSIDE;
 	
 	private float WORLD_SIZE_X;
 	private float WORLD_SIZE_Y;
@@ -33,16 +31,16 @@ public class Entity2D_Moving extends Entity2D_Base {
 	private transient RectF test_newposition;
 	
 	//TODO HACK: blockers are static - MOVE IT TO THE WORLD OBJECT
-	private transient IShapeSet blockers;
+	//private transient IShapeSet blockers;
 	
 	private List<IEntity2D> blockers_tester;
 	
-	
+	private RectF envelop_ForDraw;
+
+
 	public Entity2D_Moving(World _world, RectF _evelop, int _subtype, List<? extends IEntity2D> _blockerEntities, List<? extends IEntity2D> _killerEntities) {
 		
-		super(_evelop, _subtype);
-		
-		world = _world;
+		super(_world, _evelop, _subtype);
 		
 		blockerEntities 	= _blockerEntities;
 		killerEntities 		= _killerEntities;
@@ -58,14 +56,23 @@ public class Entity2D_Moving extends Entity2D_Base {
 
 		RectF rect_org = getEnvelop();
 
-		float width = rect_org.right - rect_org.left;
-		float height = rect_org.bottom - rect_org.top;
+		float width = 1 * (rect_org.right - rect_org.left);
+		float height = 1 * (rect_org.bottom - rect_org.top);
 
-		return new RectF(rect_org.left - (width * (ENVELOP_DRAW_EXTENSION - 1)),
-				rect_org.top - (height * (ENVELOP_DRAW_EXTENSION - 1)),
-				rect_org.right + (width * (ENVELOP_DRAW_EXTENSION - 1)),
-				rect_org.bottom + (height * (ENVELOP_DRAW_EXTENSION - 1))
-		);
+		float shift_y = height * (ENVELOP_DRAW_DOWNSIDE - ENVELOP_DRAW_UPSIDE);
+
+
+		if (envelop_ForDraw == null) {
+
+			envelop_ForDraw = new RectF();
+		}
+
+		envelop_ForDraw.left = rect_org.left - (width * (ENVELOP_DRAW_EXTENSION - 1));
+		envelop_ForDraw.top = shift_y + rect_org.top - (height * (ENVELOP_DRAW_EXTENSION - 1));
+		envelop_ForDraw.right = rect_org.right + (width * (ENVELOP_DRAW_EXTENSION - 1));
+		envelop_ForDraw.bottom = shift_y + rect_org.bottom + (height * (ENVELOP_DRAW_EXTENSION - 1));
+
+		return envelop_ForDraw;
 	}
 
 
@@ -282,7 +289,7 @@ public class Entity2D_Moving extends Entity2D_Base {
 
 
 	protected World getWorld() {
-		return world;
+		return (World) world;
 	}
 
 

@@ -47,8 +47,10 @@ public class World implements IWorld {
 	private float offsetMaxY;
 	private float offsetMinX;
 	private float offsetMinY;
-	
-	
+
+	private int maze_size_x;
+	private int maze_size_y;
+
 	private List<Entity2D_Ground> groundEntities;
 	private List<Entity2D_Ground> groundEntities_Solid;
 	private List<Entity2D_Ground> groundEntities_NotSolid;
@@ -58,7 +60,9 @@ public class World implements IWorld {
 	private List<Entity2D_Special> specialEntities;
 	
 	private Entity2D_Player playerEntity;
-	
+
+	private Entity2D_Ground[][] terrain_entities;
+
 	public volatile boolean isDirty;
 	//public boolean isUpdated;
 	
@@ -79,18 +83,19 @@ public class World implements IWorld {
 	private transient List<IEntity2D> buffer_ground;
 	
 	private transient Paint paint_background;
+
 	
-	
-	public World(Context _activity) {
-		
-		//setActivity(_activity);
-		
+	public World(Context _activity, int _maze_size_x, int _maze_size_y) {
+
+		maze_size_x = _maze_size_x;
+		maze_size_y = _maze_size_y;
+
 		init(_activity);
 	}
 	
 	
 	private void init(Context _activity) {
-		
+
 		int[] size_xy = ScreenUtils.getScreenSize(_activity);
 		VIEWPORT_SIZE_X = Math.max(size_xy[0], size_xy[1]);
 		VIEWPORT_SIZE_Y = Math.min(size_xy[0], size_xy[1]);
@@ -129,12 +134,6 @@ public class World implements IWorld {
 		}
 		return ground;
 	}
-	
-	
-	/*@Override
-	public void setActivity(Context context) {
-		activity = context;
-	}*/
 	
 	
 	/* (non-Javadoc)
@@ -190,12 +189,15 @@ public class World implements IWorld {
 		//System.out.println("Adding 2D entity: " + entity);
 		
 		if (entity instanceof Entity2D_Ground) {
-			
+
 			groundEntities.add((Entity2D_Ground) entity);
-			
-			if (((Entity2D_Ground) entity).isSolid()) {
+
+			if (entity.isSolid()) {
+
 				groundEntities_Solid.add((Entity2D_Ground) entity);
+
 			} else {
+
 				groundEntities_NotSolid.add((Entity2D_Ground) entity);
 			}
 			
@@ -284,13 +286,16 @@ public class World implements IWorld {
 		getGroundSet_NotSolid().intersect(buffer_ground, getCamera(), false);
 		getBlockersSet().intersect(buffer_ground, getCamera(), false);
 		
-		for (int i=0; i<buffer_ground.size(); i++) {
+		for (int i = 0; i < buffer_ground.size(); i++) {
+
 			IEntity2D entity = buffer_ground.get(i);
-			//if (isInsideCamera(entity.getEvelop())) {
-				entity.draw(canvas);	
-			//} else {
+
+			if (isInsideCamera(entity.getEnvelop())) {
+
+				entity.draw(canvas);
+			} /*else {
 				//throw new IllegalStateException("Outside camera");
-			//}
+			}*/
 		}
 		
 		
@@ -300,23 +305,23 @@ public class World implements IWorld {
 				entity.draw(canvas);
 			}
 		}
-		
-		for (int i=0; i<movingEntities.size(); i++) {
-			IEntity2D entity = movingEntities.get(i);
-			
-			if (entity.getType() == IEntity2D.TYPE_MOVING && entity.getSubType() == IEntity2D.SUBTYPE_MOVING_PLAYER) {
-				continue;
-			}
-			
-			if (isInsideCamera(entity.getEnvelop())) {
-				entity.draw(canvas);	
-			}
-		}
-		
+
 		for (int i=0; i<specialEntities.size(); i++) {
 			IEntity2D entity = specialEntities.get(i);
 			if (isInsideCamera(entity.getEnvelop())) {
-				entity.draw(canvas);	
+				entity.draw(canvas);
+			}
+		}
+
+		for (int i=0; i<movingEntities.size(); i++) {
+			IEntity2D entity = movingEntities.get(i);
+
+			if (entity.getType() == IEntity2D.TYPE_MOVING && entity.getSubType() == IEntity2D.SUBTYPE_MOVING_PLAYER) {
+				continue;
+			}
+
+			if (isInsideCamera(entity.getEnvelop())) {
+				entity.draw(canvas);
 			}
 		}
 		
@@ -516,23 +521,37 @@ public class World implements IWorld {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see org.metatrans.commons.graphics2d.model.IWorld#getActivity()
-	 */
-	//@Override
-	/*public Context getActivity() {
-		return activity;
-	}*/
-
-
 	@Override
 	public float getCellSize() {
 		return cell_size;
 	}
 
+	@Override
+	public synchronized Entity2D_Ground getTerrainCell(int x, int y) {
+
+		if (terrain_entities == null) {
+
+			terrain_entities = new Entity2D_Ground[maze_size_x][maze_size_y];
+
+			for (Entity2D_Ground entity: groundEntities) {
+
+
+				if (terrain_entities[entity.getCellIndex_X()][entity.getCellIndex_Y()] != null) {
+
+					throw new IllegalStateException();
+				}
+
+				terrain_entities[entity.getCellIndex_X()][entity.getCellIndex_Y()] = entity;
+			}
+		}
+
+		return terrain_entities[x][y];
+	}
+
 
 	@Override
 	public void setCellSize(float _cell_size) {
+
 		cell_size = _cell_size;
 	}
 
@@ -546,43 +565,38 @@ public class World implements IWorld {
 
 	@Override
 	public boolean isDirty() {
+
 		return isDirty;
 	}
 
 
 	@Override
 	public int getMaxSpeed_CHALLENGER() {
+
 		return (int) SPEED_MAX_CHALLENGER;
 	}
 
 
 	@Override
 	public int getMaxSpeed_BULLET() {
+
 		return (int) SPEED_MAX_BULLET;
 	}
 	
 	
 	@Override
 	public int getTimeInterval_BornTolerance() {
+
 		return TIME_INTERVAL_BornTolerance;
 	}
 
 
-	/*@Override
-	public void setCellsCount(int x, int y) {
-		cells_count_x = x;
-		cells_count_y = y;
-	}
-
-
 	@Override
-	public int getCellsCount_X() {
-		return cells_count_x;
+	public boolean isOuterBorder(int cell_x, int cell_y) {
+
+		return cell_x == 0
+				|| cell_x == terrain_entities.length - 1
+				|| cell_y == 0
+				|| cell_y == terrain_entities[0].length - 1;
 	}
-
-
-	@Override
-	public int getCellsCount_Y() {
-		return cells_count_y;
-	}*/
 }

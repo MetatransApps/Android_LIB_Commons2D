@@ -47,6 +47,8 @@ public interface IWorld extends Serializable {
 	public void setCellSize(float cell_size);
 	public abstract float getCellSize();
 
+	public Entity2D_Ground getTerrainCell(int x, int y);
+
 	/*public abstract void setCellsCount(int x, int y);
 	public abstract int getCellsCount_X();
 	public abstract int getCellsCount_Y();*/
@@ -59,4 +61,6 @@ public interface IWorld extends Serializable {
 	public int getMaxSpeed_BULLET();
 	
 	public int getTimeInterval_BornTolerance();
+
+    boolean isOuterBorder(int cell_x, int cell_y);
 }

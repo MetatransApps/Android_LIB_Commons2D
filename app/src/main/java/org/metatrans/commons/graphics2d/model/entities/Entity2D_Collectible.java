@@ -11,7 +11,7 @@ public class Entity2D_Collectible extends Entity2D_Base {
 
 
 	public Entity2D_Collectible(RectF _evelop, int _subtype) {
-		super(_evelop, _subtype);
+		super(null, _evelop, _subtype);
 	}
 	
 	
