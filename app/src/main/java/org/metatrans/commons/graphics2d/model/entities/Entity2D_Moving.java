@@ -9,7 +9,7 @@ import org.metatrans.commons.graphics2d.model.World;
 import android.graphics.RectF;
 
 
-public class Entity2D_Moving extends Entity2D_Base {
+public abstract class Entity2D_Moving extends Entity2D_Base {
 	
 	
 	private static final long serialVersionUID = 5936821405527936582L;
@@ -129,7 +129,7 @@ public class Entity2D_Moving extends Entity2D_Base {
 		if (killerEntities != null) {
 			for (IEntity2D killer: killerEntities) {
 				if (RectF.intersects(getEnvelop(), killer.getEnvelop())) {
-					killed();
+					killed((Entity2D_Moving) killer);
 					return;
 				}
 			}
@@ -268,7 +268,7 @@ public class Entity2D_Moving extends Entity2D_Base {
 	}
 	
 	
-	protected void killed() {
+	protected void killed(Entity2D_Moving killer) {
 		//System.out.println(this + " groundContact_Y");
 	}
 	

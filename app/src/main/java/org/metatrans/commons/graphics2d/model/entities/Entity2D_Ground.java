@@ -6,7 +6,7 @@ import android.graphics.RectF;
 import org.metatrans.commons.graphics2d.model.IWorld;
 
 
-public class Entity2D_Ground extends Entity2D_Base {
+public abstract class Entity2D_Ground extends Entity2D_Base {
 	
 	
 	private static final long serialVersionUID = -1773380701450381753L;

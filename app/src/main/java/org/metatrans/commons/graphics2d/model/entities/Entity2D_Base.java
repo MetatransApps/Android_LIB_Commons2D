@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 import org.metatrans.commons.graphics2d.model.IWorld;
-import org.metatrans.commons.graphics2d.model.World;
 
 
 public abstract class Entity2D_Base implements IEntity2D {
@@ -53,9 +52,7 @@ public abstract class Entity2D_Base implements IEntity2D {
 	}
 	
 	
-	public Bitmap getBitmap() {
-		return null;
-	}
+	public abstract Bitmap getBitmap();
 	
 	
 	public int getBitmapTransparency() {

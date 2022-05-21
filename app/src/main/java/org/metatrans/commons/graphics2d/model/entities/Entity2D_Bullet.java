@@ -8,7 +8,7 @@ import org.metatrans.commons.graphics2d.model.World;
 import android.graphics.RectF;
 
 
-public class Entity2D_Bullet extends Entity2D_Moving {
+public abstract class Entity2D_Bullet extends Entity2D_Moving {
 	
 	
 	private static final long serialVersionUID = -6909037206508107744L;

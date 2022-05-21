@@ -4,7 +4,7 @@ package org.metatrans.commons.graphics2d.model.entities;
 import android.graphics.RectF;
 
 
-public class Entity2D_Special extends Entity2D_Base {
+public abstract class Entity2D_Special extends Entity2D_Base {
 	
 	
 	private static final long serialVersionUID = 3348242354945602637L;

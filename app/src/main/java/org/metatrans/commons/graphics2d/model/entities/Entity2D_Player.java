@@ -64,7 +64,7 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 
 
 	@Override
-	protected void killed() {
+	protected void killed(Entity2D_Moving killer) {
 		
 		if (!isInBornTolerance()) {
 			

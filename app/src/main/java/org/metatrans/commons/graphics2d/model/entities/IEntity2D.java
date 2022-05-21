@@ -22,13 +22,14 @@ public interface IEntity2D extends Serializable {
 	
 	public static final int SUBTYPE_GROUND_WALL			= 1;
 	public static final int SUBTYPE_GROUND_EMPTY		= 2;
-	
+	public static final int SUBTYPE_GROUND_FEEDING		= 3;
+
 	public static final int SUBTYPE_COLLECTIBLE_KEY 	= 1;
 	public static final int SUBTYPE_COLLECTIBLE_BULLET 	= 2;
 	public static final int SUBTYPE_COLLECTIBLE_STAR 	= 3;
 	
 	public static final int SUBTYPE_SPECIAL_EXIT		= 1;
-	
+	public static final int SUBTYPE_SPECIAL_FEEDING		= 2;
 	
 	public int getType();
 	public int getSubType();

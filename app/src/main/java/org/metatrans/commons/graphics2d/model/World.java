@@ -9,6 +9,7 @@ import org.metatrans.commons.cfg.colours.ConfigurationUtils_Colours;
 import org.metatrans.commons.graphics2d.logic.IShapeSet;
 import org.metatrans.commons.graphics2d.logic.ShapeSet_Quad;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Collectible;
+import org.metatrans.commons.graphics2d.model.entities.Entity2D_Feeding;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Ground;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Moving;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Player;
@@ -54,6 +55,7 @@ public class World implements IWorld {
 	private List<Entity2D_Ground> groundEntities;
 	private List<Entity2D_Ground> groundEntities_Solid;
 	private List<Entity2D_Ground> groundEntities_NotSolid;
+	private List<Entity2D_Ground> groundEntities_Feeding;
 	private List<Entity2D_Collectible> collectibleEntities;
 	private List<Entity2D_Moving> movingEntities;
 	private List<Entity2D_Moving> movingEntities_buffer;
@@ -103,6 +105,7 @@ public class World implements IWorld {
 		groundEntities 			= new ArrayList<Entity2D_Ground>();
 		groundEntities_Solid	= new ArrayList<Entity2D_Ground>();
 		groundEntities_NotSolid = new ArrayList<Entity2D_Ground>();
+		groundEntities_Feeding 	= new ArrayList<Entity2D_Ground>();
 		collectibleEntities 	= new ArrayList<Entity2D_Collectible>();
 		movingEntities 			= new ArrayList<Entity2D_Moving>();
 		movingEntities_buffer	= new ArrayList<Entity2D_Moving>();
@@ -195,6 +198,10 @@ public class World implements IWorld {
 			if (entity.isSolid()) {
 
 				groundEntities_Solid.add((Entity2D_Ground) entity);
+
+			} else if (entity instanceof Entity2D_Feeding) {
+
+				groundEntities_Feeding.add((Entity2D_Ground) entity);
 
 			} else {
 
@@ -293,12 +300,28 @@ public class World implements IWorld {
 			if (isInsideCamera(entity.getEnvelop())) {
 
 				entity.draw(canvas);
-			} /*else {
+			} //else {
 				//throw new IllegalStateException("Outside camera");
-			}*/
+			//}
 		}
-		
-		
+
+		if(groundEntities_Feeding == null) {
+
+			groundEntities_Feeding = new ArrayList<Entity2D_Ground>();
+		}
+
+		for (int i = 0; i < groundEntities_Feeding.size(); i++) {
+
+			IEntity2D entity = groundEntities_Feeding.get(i);
+
+			if (isInsideCamera(entity.getEnvelop())) {
+
+				entity.draw(canvas);
+			} //else {
+			//throw new IllegalStateException("Outside camera");
+			//}
+		}
+
 		for (int i=0; i<collectibleEntities.size(); i++) {
 			IEntity2D entity = collectibleEntities.get(i);
 			if (isInsideCamera(entity.getEnvelop())) {
