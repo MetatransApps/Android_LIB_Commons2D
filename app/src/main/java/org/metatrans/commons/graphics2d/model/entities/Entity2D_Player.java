@@ -51,7 +51,7 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 
 		if (isInBornTolerance() && !Application_2D_Base.getInstance().getGameData().paused) {
 
-			if (Math.random() < 0.5f) {
+			if (Math.random() < 0.75f) {
 
 				super.draw(c);
 			}

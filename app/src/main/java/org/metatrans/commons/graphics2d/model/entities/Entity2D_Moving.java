@@ -15,7 +15,7 @@ public class Entity2D_Moving extends Entity2D_Base {
 	private static final long serialVersionUID = 5936821405527936582L;
 
 	protected static float ENVELOP_DRAW_EXTENSION = 1.3f;
-	protected static float ENVELOP_DRAW_UPSIDE 	  = 0.65f;
+	protected static float ENVELOP_DRAW_UPSIDE 	  = 0.605f;
 	protected static float ENVELOP_DRAW_DOWNSIDE  = 1 - ENVELOP_DRAW_UPSIDE;
 	
 	private float WORLD_SIZE_X;
