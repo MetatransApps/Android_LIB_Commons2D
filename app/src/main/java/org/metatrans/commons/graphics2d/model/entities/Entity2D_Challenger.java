@@ -74,11 +74,19 @@ public abstract class Entity2D_Challenger extends Entity2D_Moving {
 	@Override
 	protected void killed(Entity2D_Moving killer) {
 
-		Entity2D_Feeding feeding_entity = new Entity2D_Feeding(world, getEnvelop_ForDraw(), getBitmap(), killer.getEnvelop_ForDraw(), killer.getBitmap());
-		//Entity2D_Feeding feeding_entity = new Entity2D_Feeding(world, feeding_envelop, ((World) getWorld()).getPlayerEntity().getBitmap());
+		if (supportsFeeding()) {
 
-		getWorld().addEntity(feeding_entity);
+			Entity2D_Feeding feeding_entity = new Entity2D_Feeding(world, getEnvelop_ForDraw(), getBitmap(), killer.getEnvelop_ForDraw(), killer.getBitmap());
+
+			getWorld().addEntity(feeding_entity);
+		}
 
 		getWorld().removeMovingEntity(this);
+	}
+
+
+	protected boolean supportsFeeding() {
+
+		return true;
 	}
 }
