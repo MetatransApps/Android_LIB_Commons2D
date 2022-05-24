@@ -7,17 +7,26 @@ import org.metatrans.commons.graphics2d.app.Application_2D_Base;
 import org.metatrans.commons.graphics2d.model.IWorld;
 import org.metatrans.commons.ui.utils.ScreenUtils;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.opengl.GLSurfaceView;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
+
+/**
+ * TODO: Update to Open GL ES for bigger FPS. With many Bitmaps the current implementation goes below 10 FPS!
+ * https://stackoverflow.com/questions/3553244/android-opengl-es-and-2d
+ * extends GLSurfaceView instead of SurfaceView
+ * Implement and set Renderer with setRenderer(...)
+ */
 public class View_Surface_Base extends SurfaceView implements SurfaceHolder.Callback {
 	
 	
@@ -185,8 +194,7 @@ public class View_Surface_Base extends SurfaceView implements SurfaceHolder.Call
 	    	return running;
 	    }
 	    
-		
-		@SuppressLint("WrongCall")
+
 		@Override
         public void run() {
 			
@@ -194,34 +202,46 @@ public class View_Surface_Base extends SurfaceView implements SurfaceHolder.Call
         	
 	        //Looper.prepare();
 			
-        	final int UPDATE_INTERVAL = 27;//17 in ms
+        	final int UPDATE_INTERVAL = 17; //in ms
         	
             while (running) {
             	
             	try {
+
 	                timeNow = System.currentTimeMillis();
+
 	                timeDelta = timeNow - timePrevFrame;
+
 	                long sleepTime;
+
 	                if (timeDelta < UPDATE_INTERVAL) {
+
 	                	//Limit frame rate to max 30fps
 	                    sleepTime = UPDATE_INTERVAL - timeDelta;
+
 	                } else {
+
 	                	//Give time to other threads in order to prevent screen freeze
-	                	sleepTime = 10;//ms
+	                	sleepTime = UPDATE_INTERVAL / 2; //ms
 	                }
 	                
                     try {
+
                         Thread.sleep(sleepTime);
+
                     } catch(InterruptedException e) {
+
                     	//Do nothing
                     }
 
 					timePrevFrame = System.currentTimeMillis();
 
 	            	Canvas c = null;
+
 	                try {
 	                	
 	                    c = _surfaceHolder.lockCanvas(camera);
+
 	                    //System.out.println("canvas=" + c);
 	                    if (c != null) {
 		                    //synchronized (_surfaceHolder) {
@@ -235,17 +255,22 @@ public class View_Surface_Base extends SurfaceView implements SurfaceHolder.Call
 		                	getWorld().update();
 		                	
 		                    if (timeNow - buffer_time_interval_playing_ms >= 1000) {
+
 		                    	Application_2D_Base.getInstance().getGameData().addAccumulated_time_inmainscreen(timeNow - buffer_time_interval_playing_ms); 
 		                    	buffer_time_interval_playing_ms = timeNow;
 		                    }
 	                    }
 	                    
 	                } finally {
+
 	                    if (c != null) {
+
 	                    	_surfaceHolder.unlockCanvasAndPost(c);
 	                    }
 	                }
+
             	} catch(Exception e) {
+
             		//Continue to update the world and draw it.
             		//In rare cases there is a java.lang.IllegalArgumentException at android.view.Surface.nativeUnlockCanvasAndPost (Surface.java)
             		e.printStackTrace();

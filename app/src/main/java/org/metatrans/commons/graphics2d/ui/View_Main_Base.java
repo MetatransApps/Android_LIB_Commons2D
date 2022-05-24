@@ -16,7 +16,6 @@ import org.metatrans.commons.ui.utils.ScreenUtils;
 
 import com.commons2d.R;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -29,7 +28,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 
-@SuppressLint("ViewConstructor")
 public abstract class View_Main_Base extends View_Surface_Base {
 	
 	

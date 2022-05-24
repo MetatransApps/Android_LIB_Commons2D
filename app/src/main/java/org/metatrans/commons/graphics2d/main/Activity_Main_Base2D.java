@@ -54,6 +54,8 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); 
 	    
 		initUI();
+
+		System.out.println("getWindow().getAttributes()=" + getWindow().getAttributes());
 	}
 
 
@@ -204,7 +206,7 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 		
 		Application_2D_Base.getInstance().recreateGameDataObject();
 
-		Application_Base_Ads.getInstance().openInterstitial();
+		//Application_Base_Ads.getInstance().openInterstitial();
 	}
 	
 	

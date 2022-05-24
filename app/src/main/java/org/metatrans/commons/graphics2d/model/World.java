@@ -617,9 +617,15 @@ public class World implements IWorld {
 	@Override
 	public boolean isOuterBorder(int cell_x, int cell_y) {
 
+		//TODO remove
+		if (terrain_entities == null) {
+
+			return false;
+		}
+
 		return cell_x == 0
 				|| cell_x == terrain_entities.length - 1
 				|| cell_y == 0
-				|| cell_y == terrain_entities[0].length - 1;
+				|| (terrain_entities[0] != null && cell_y == terrain_entities[0].length - 1);
 	}
 }

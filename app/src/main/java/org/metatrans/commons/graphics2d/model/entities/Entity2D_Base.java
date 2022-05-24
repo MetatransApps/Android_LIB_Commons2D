@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 import org.metatrans.commons.graphics2d.model.IWorld;
+import org.metatrans.commons.ui.utils.BitmapUtils;
 
 
 public abstract class Entity2D_Base implements IEntity2D {
@@ -82,6 +83,16 @@ public abstract class Entity2D_Base implements IEntity2D {
 	}
 
 
+	protected Bitmap scaleBitmapToRectangleForDrawing(Bitmap org) {
+
+		return BitmapUtils.createScaledBitmap(org,
+				(int) getEnvelop_ForDraw().width(),
+				(int) getEnvelop_ForDraw().height(),
+				false
+		);
+	}
+
+
 	public float getX() {
 		return getEnvelop().left;
 	}
@@ -105,7 +116,8 @@ public abstract class Entity2D_Base implements IEntity2D {
 		
 		if (getBitmap() != null) {
 			getPaint().setAlpha(getBitmapTransparency());
-			c.drawBitmap(getBitmap(), null, getEnvelop_ForDraw(), getPaint());
+			c.drawBitmap(getBitmap(), null, getEnvelop_ForDraw(), null);
+			//c.drawBitmap(getBitmap(), getEnvelop_ForDraw().left, getEnvelop_ForDraw().top, getPaint());
 		}
 	}
 
