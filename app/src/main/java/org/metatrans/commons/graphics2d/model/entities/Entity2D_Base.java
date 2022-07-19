@@ -87,8 +87,7 @@ public abstract class Entity2D_Base implements IEntity2D {
 
 		return BitmapUtils.createScaledBitmap(org,
 				(int) getEnvelop_ForDraw().width(),
-				(int) getEnvelop_ForDraw().height(),
-				false
+				(int) getEnvelop_ForDraw().height()
 		);
 	}
 

@@ -61,7 +61,7 @@ public class Activity_Menu_Joystick extends Activity_Base {
 
 			Bitmap bitmap = BitmapUtils.fromResource(this, colourCfg.getIconResID());
 			Bitmap old = bitmap;
-			bitmap = BitmapUtils.createScaledBitmap(bitmap, getIconSize(), getIconSize(), false);
+			bitmap = BitmapUtils.createScaledBitmap(bitmap, getIconSize(), getIconSize());
 			BitmapUtils.recycle(bitmap, old);
 			Drawable drawable = BitmapUtils.createDrawable(this, bitmap);
 			
