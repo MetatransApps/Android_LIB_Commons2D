@@ -44,7 +44,7 @@ public class UserSettings extends UserSettings_Base {
 	}
 
 
-	protected void fixFields(String op) {
+	private void fixFields(String op) {
 
 	}
 }
