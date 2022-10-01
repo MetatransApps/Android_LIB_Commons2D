@@ -35,7 +35,7 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 	
 	private List<IEntity2D> blockers_tester;
 	
-	private RectF envelop_ForDraw;
+	private transient RectF envelop_ForDraw;
 
 
 	public Entity2D_Moving(World _world, RectF _evelop, int _subtype, List<? extends IEntity2D> _blockerEntities, List<? extends IEntity2D> _killerEntities) {

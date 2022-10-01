@@ -336,6 +336,11 @@ public class World implements IWorld {
 			}
 		}
 
+		if (!hasToDrawPlayerLast()) {
+
+			playerEntity.draw(canvas);
+		}
+
 		for (int i=0; i<movingEntities.size(); i++) {
 			IEntity2D entity = movingEntities.get(i);
 
@@ -347,15 +352,24 @@ public class World implements IWorld {
 				entity.draw(canvas);
 			}
 		}
-		
-		playerEntity.draw(canvas);
+
+		if (hasToDrawPlayerLast()) {
+
+			playerEntity.draw(canvas);
+		}
 		
 		canvas.restore();
 		
 		isDirty = false;
 	}
 	
-	
+
+	public boolean hasToDrawPlayerLast() {
+
+		return true;
+	}
+
+
 	private boolean isInsideCamera(RectF entityEnvelop) {
 		return RectF.intersects(entityEnvelop, getCamera());
 	}

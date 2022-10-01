@@ -20,7 +20,7 @@ public class UserSettings extends UserSettings_Base {
 	public int movejoystick_side = IConfigurationJoystick.MOVE_RIGHTJOYSTICK;
 
 	
-	public UserSettings() {
+	protected UserSettings() {
 		
 		super();
 	}
@@ -42,9 +42,9 @@ public class UserSettings extends UserSettings_Base {
 	    
 	    fixFields("readObject");
 	}
-	
-	
-	private void fixFields(String op) {
-		
+
+
+	protected void fixFields(String op) {
+
 	}
 }
