@@ -29,9 +29,11 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 	private List<Entity2D_Collectible> collectedEntities;
 
 
-	public Entity2D_Player(World _world, RectF _evelop, List<? extends IEntity2D> blockersEntities, List<? extends IEntity2D> _killerEntities) {
+	public Entity2D_Player(World _world, RectF _evelop,
+						   List<? extends IEntity2D> blockersEntities, List<? extends IEntity2D> _killerEntities,
+						   int bitmap_id, int rotation_angle_in_degrees) {
 		
-		super(_world, _evelop, SUBTYPE_MOVING_PLAYER, blockersEntities, _killerEntities);
+		super(_world, _evelop, SUBTYPE_MOVING_PLAYER, blockersEntities, _killerEntities, bitmap_id, rotation_angle_in_degrees);
 		
 		collectibleEntities 		= getWorld().getCollectibleEntities();
 		collectibleEntities_buffer 	= new ArrayList<Entity2D_Collectible>();

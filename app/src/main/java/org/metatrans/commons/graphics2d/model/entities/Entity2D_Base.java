@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 import org.metatrans.commons.graphics2d.model.IWorld;
+import org.metatrans.commons.graphics2d.model.World;
 import org.metatrans.commons.ui.utils.BitmapUtils;
 
 
@@ -14,37 +15,49 @@ public abstract class Entity2D_Base implements IEntity2D {
 	
 	
 	private static final long serialVersionUID = -2083232671109801129L;
-	
-	
+
+
+	public static float ENVELOP_DRAW_EXTENSION = 1.3f;
+	public static float ENVELOP_DRAW_UPSIDE = 0.605f;
+	public static float ENVELOP_DRAW_DOWNSIDE = 1 - ENVELOP_DRAW_UPSIDE;
+
+
 	private int subtype;
 	
-	private float evelop_left;
-	private float evelop_top;
-	private float evelop_right;
-	private float evelop_bottom;
+	private float envelop_left;
+	private float envelop_top;
+	private float envelop_right;
+	private float envelop_bottom;
 	
 	private transient RectF envelop;
+	protected transient RectF envelop_ForDraw;
 	private transient Paint paint;
 
 	protected IWorld world;
 
 	
-	public Entity2D_Base(IWorld _world, RectF _evelop, int _subtype) {
+	public Entity2D_Base(IWorld _world, RectF _envelop, int _subtype) {
 
 		world = _world;
 
-		envelop = _evelop;
-		
-		evelop_left = envelop.left;
-		evelop_top = envelop.top;
-		evelop_right = envelop.right;
-		evelop_bottom = envelop.bottom;
+		envelop = _envelop;
+
+		envelop_left = envelop.left;
+		envelop_top = envelop.top;
+		envelop_right = envelop.right;
+		envelop_bottom = envelop.bottom;
 		
 		subtype = _subtype;
 
 	}
-	
-	
+
+
+	protected World getWorld() {
+
+		return (World) world;
+	}
+
+
 	public abstract int getType();
 	
 	
@@ -70,16 +83,54 @@ public abstract class Entity2D_Base implements IEntity2D {
 
 		if (envelop == null) {
 
-			envelop = new RectF(evelop_left, evelop_top, evelop_right, evelop_bottom);
+			envelop = new RectF(envelop_left, envelop_top, envelop_right, envelop_bottom);
 		}
 
 		return envelop;
 	}
 
+	protected boolean hasCustomEnvelopForDraw() {
+
+		return false;
+	}
+
 
 	public RectF getEnvelop_ForDraw() {
 
-		return getEnvelop();
+		RectF rect_org = getEnvelop();
+
+		if (!hasCustomEnvelopForDraw()) {
+
+			return rect_org;
+		}
+
+		float width = 1 * (rect_org.right - rect_org.left);
+		float height = 1 * (rect_org.bottom - rect_org.top);
+
+		float shift_y = height * (ENVELOP_DRAW_DOWNSIDE - ENVELOP_DRAW_UPSIDE);
+
+
+		if (envelop_ForDraw == null) {
+
+			envelop_ForDraw = new RectF();
+		}
+
+		envelop_ForDraw.left = rect_org.left - (width * (ENVELOP_DRAW_EXTENSION - 1));
+		envelop_ForDraw.top = shift_y + rect_org.top - (height * (ENVELOP_DRAW_EXTENSION - 1));
+		envelop_ForDraw.right = rect_org.right + (width * (ENVELOP_DRAW_EXTENSION - 1));
+		envelop_ForDraw.bottom = shift_y + rect_org.bottom + (height * (ENVELOP_DRAW_EXTENSION - 1));
+
+		return envelop_ForDraw;
+	}
+
+
+	public float getX() {
+		return getEnvelop().left;
+	}
+	
+	
+	public float getY() {
+		return getEnvelop().top;
 	}
 
 
@@ -92,31 +143,23 @@ public abstract class Entity2D_Base implements IEntity2D {
 	}
 
 
-	public float getX() {
-		return getEnvelop().left;
-	}
-	
-	
-	public float getY() {
-		return getEnvelop().top;
-	}
-	
-	
 	public void draw(Canvas c) {
 		
 		
 		int b_color = getBackgroundColour();
+
 		if (b_color != -1) {
+
 			getPaint().setColor(b_color);
 			getPaint().setAlpha(255);
 			c.drawRect(getEnvelop_ForDraw(), getPaint());
 		}
 
-		
-		if (getBitmap() != null) {
-			getPaint().setAlpha(getBitmapTransparency());
-			c.drawBitmap(getBitmap(), null, getEnvelop_ForDraw(), null);
-			//c.drawBitmap(getBitmap(), getEnvelop_ForDraw().left, getEnvelop_ForDraw().top, getPaint());
+		Bitmap bitmap = getBitmap();
+
+		if (bitmap != null) {
+
+			c.drawBitmap(bitmap, null, getEnvelop_ForDraw(), null);
 		}
 	}
 

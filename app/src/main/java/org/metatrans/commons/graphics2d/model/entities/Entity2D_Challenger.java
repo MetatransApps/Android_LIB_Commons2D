@@ -18,8 +18,14 @@ public abstract class Entity2D_Challenger extends Entity2D_Moving {
 	private float new_dy;
 	
 	
-	public Entity2D_Challenger(World _world, RectF _evelop, List<Entity2D_Ground> _blockerEntities, List<? extends IEntity2D> _killerEntities) {
-		super(_world, _evelop, SUBTYPE_MOVING_CHALLENGER, _blockerEntities, _killerEntities);
+	public Entity2D_Challenger(World _world, RectF _evelop,
+							   List<Entity2D_Ground> _blockerEntities,
+							   List<? extends IEntity2D> _killerEntities,
+							   int bitmap_id, int rotation_angle_in_degrees) {
+
+		super(_world, _evelop, SUBTYPE_MOVING_CHALLENGER,
+				_blockerEntities, _killerEntities,
+				bitmap_id, rotation_angle_in_degrees);
 	}
 
 

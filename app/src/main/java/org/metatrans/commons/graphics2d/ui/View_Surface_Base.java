@@ -67,6 +67,7 @@ public class View_Surface_Base extends SurfaceView implements SurfaceHolder.Call
 	
 	
 	protected IWorld getWorld() {
+
 		return Application_2D_Base.getInstance().getGameData().world;
 	}
 	

@@ -6,8 +6,9 @@ import java.util.List;
 
 import org.metatrans.commons.app.Application_Base;
 import org.metatrans.commons.cfg.colours.ConfigurationUtils_Colours;
-import org.metatrans.commons.graphics2d.logic.IShapeSet;
-import org.metatrans.commons.graphics2d.logic.ShapeSet_Quad;
+import org.metatrans.commons.graphics2d.model.entities.I2DBitmapCache;
+import org.metatrans.commons.graphics2d.model.logic.IShapeSet;
+import org.metatrans.commons.graphics2d.model.logic.ShapeSet_Quad;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Collectible;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Feeding;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Ground;
@@ -23,7 +24,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 
-public class World implements IWorld {
+public abstract class World implements IWorld {
 	
 	
 	private static final long serialVersionUID = -1126863413955857516L;
@@ -58,7 +59,8 @@ public class World implements IWorld {
 	private List<Entity2D_Ground> groundEntities_Feeding;
 	private List<Entity2D_Collectible> collectibleEntities;
 	private List<Entity2D_Moving> movingEntities;
-	private List<Entity2D_Moving> movingEntities_buffer;
+	private List<Entity2D_Moving> movingEntities_buffer_draw;
+	private List<Entity2D_Moving> movingEntities_buffer_update;
 	private List<Entity2D_Special> specialEntities;
 	
 	private Entity2D_Player playerEntity;
@@ -86,7 +88,9 @@ public class World implements IWorld {
 	
 	private transient Paint paint_background;
 
-	
+	private transient I2DBitmapCache bitmap_cache;
+
+
 	public World(Context _activity, int _maze_size_x, int _maze_size_y) {
 
 		maze_size_x = _maze_size_x;
@@ -94,28 +98,61 @@ public class World implements IWorld {
 
 		init(_activity);
 	}
-	
-	
+
+
+	public float get_WORLD_SIZE_X() {
+
+		return WORLD_SIZE_X;
+	}
+
+
+	public float get_WORLD_SIZE_Y() {
+
+		return WORLD_SIZE_Y;
+	}
+
+
+	protected abstract I2DBitmapCache createBitmapCache();
+
+
+	public I2DBitmapCache getBitmapCache() {
+
+		if (bitmap_cache == null) {
+
+			synchronized (this) {
+
+				if (bitmap_cache == null) {
+
+					bitmap_cache = createBitmapCache();
+				}
+			}
+		}
+
+		return bitmap_cache;
+	}
+
+
 	private void init(Context _activity) {
 
-		int[] size_xy = ScreenUtils.getScreenSize(_activity);
-		VIEWPORT_SIZE_X = Math.max(size_xy[0], size_xy[1]);
-		VIEWPORT_SIZE_Y = Math.min(size_xy[0], size_xy[1]);
+		int[] size_xy 					= ScreenUtils.getScreenSize(_activity);
+		VIEWPORT_SIZE_X 				= Math.max(size_xy[0], size_xy[1]);
+		VIEWPORT_SIZE_Y 				= Math.min(size_xy[0], size_xy[1]);
 		
-		groundEntities 			= new ArrayList<Entity2D_Ground>();
-		groundEntities_Solid	= new ArrayList<Entity2D_Ground>();
-		groundEntities_NotSolid = new ArrayList<Entity2D_Ground>();
-		groundEntities_Feeding 	= new ArrayList<Entity2D_Ground>();
-		collectibleEntities 	= new ArrayList<Entity2D_Collectible>();
-		movingEntities 			= new ArrayList<Entity2D_Moving>();
-		movingEntities_buffer	= new ArrayList<Entity2D_Moving>();
-		specialEntities 		= new ArrayList<Entity2D_Special>();
+		groundEntities 					= new ArrayList<Entity2D_Ground>();
+		groundEntities_Solid			= new ArrayList<Entity2D_Ground>();
+		groundEntities_NotSolid 		= new ArrayList<Entity2D_Ground>();
+		groundEntities_Feeding 			= new ArrayList<Entity2D_Ground>();
+		collectibleEntities 			= new ArrayList<Entity2D_Collectible>();
+		movingEntities 					= new ArrayList<Entity2D_Moving>();
+		movingEntities_buffer_draw		= new ArrayList<Entity2D_Moving>();
+		movingEntities_buffer_update 	= new ArrayList<Entity2D_Moving>();
+		specialEntities 				= new ArrayList<Entity2D_Special>();
 		
-		SPEED_MAX_PLAYER 		= Math.min(VIEWPORT_SIZE_X, VIEWPORT_SIZE_Y) / 50;
-		SPEED_MAX_BULLET 		= 2 * SPEED_MAX_PLAYER;
-		SPEED_MAX_CHALLENGER 	= (2 * SPEED_MAX_PLAYER) / 3;
+		SPEED_MAX_PLAYER 				= Math.min(VIEWPORT_SIZE_X, VIEWPORT_SIZE_Y) / 50;
+		SPEED_MAX_BULLET 				= 2 * SPEED_MAX_PLAYER;
+		SPEED_MAX_CHALLENGER 			= (2 * SPEED_MAX_PLAYER) / 3;
 		
-		paint_background = new Paint();
+		paint_background 				= new Paint();
 	}
 	
 	
@@ -213,7 +250,7 @@ public class World implements IWorld {
 			collectibleEntities.add((Entity2D_Collectible) entity);
 			
 		} else if (entity instanceof Entity2D_Moving) {
-			
+
 			movingEntities.add((Entity2D_Moving) entity);
 			
 			//System.out.println("Adding 2D moving entity: " + entity);
@@ -225,7 +262,8 @@ public class World implements IWorld {
 				}
 				
 				playerEntity = (Entity2D_Player) entity;
-				//updateCamera();
+
+				updateCamera();
 			}
 			
 		} else if (entity instanceof Entity2D_Special) {
@@ -233,8 +271,8 @@ public class World implements IWorld {
 			specialEntities.add((Entity2D_Special) entity);
 			
 		}
-		
-		
+
+
 		if (entity.getEnvelop().left < minX) {
 			minX = entity.getEnvelop().left;
 		}
@@ -260,12 +298,9 @@ public class World implements IWorld {
 		if (playerEntity != null) {
 			playerEntity.setWorldSize(WORLD_SIZE_X, WORLD_SIZE_Y);
 		}
-		
-		for (Entity2D_Moving cur: movingEntities) {
-			cur.setWorldSize(WORLD_SIZE_X, WORLD_SIZE_Y);
-		}
 	}
-	
+
+
 	/* (non-Javadoc)
 	 * @see org.metatrans.commons.graphics2d.model.IWorld#draw(android.graphics.Canvas)
 	 */
@@ -300,9 +335,7 @@ public class World implements IWorld {
 			if (isInsideCamera(entity.getEnvelop())) {
 
 				entity.draw(canvas);
-			} //else {
-				//throw new IllegalStateException("Outside camera");
-			//}
+			}
 		}
 
 		if(groundEntities_Feeding == null) {
@@ -317,9 +350,7 @@ public class World implements IWorld {
 			if (isInsideCamera(entity.getEnvelop())) {
 
 				entity.draw(canvas);
-			} //else {
-			//throw new IllegalStateException("Outside camera");
-			//}
+			}
 		}
 
 		for (int i=0; i<collectibleEntities.size(); i++) {
@@ -341,23 +372,54 @@ public class World implements IWorld {
 			playerEntity.draw(canvas);
 		}
 
-		for (int i=0; i<movingEntities.size(); i++) {
-			IEntity2D entity = movingEntities.get(i);
 
-			if (entity.getType() == IEntity2D.TYPE_MOVING && entity.getSubType() == IEntity2D.SUBTYPE_MOVING_PLAYER) {
+		if (movingEntities_buffer_draw == null) {
+
+			movingEntities_buffer_draw = new ArrayList<>();
+		}
+
+		movingEntities_buffer_draw.addAll(movingEntities);
+		for (int i=0; i<movingEntities_buffer_draw.size(); i++) {
+
+			Entity2D_Moving entity = movingEntities_buffer_draw.get(i);
+
+			if (entity.isRemoved()) {
+
+				movingEntities.remove(entity);
+
 				continue;
 			}
 
+
+			if (entity.getType() == IEntity2D.TYPE_MOVING && entity.getSubType() == IEntity2D.SUBTYPE_MOVING_PLAYER) {
+
+				continue;
+			}
+
+
 			if (isInsideCamera(entity.getEnvelop())) {
+
 				entity.draw(canvas);
 			}
 		}
+		movingEntities_buffer_draw.clear();
+
 
 		if (hasToDrawPlayerLast()) {
 
 			playerEntity.draw(canvas);
 		}
-		
+
+
+		/*paint_background.setColor(Color.RED);
+		paint_background.setAlpha(128);
+
+		canvas.drawCircle(VIEWPORT_SIZE_X / 2,
+				VIEWPORT_SIZE_Y / 2,
+				20,
+				paint_background);
+		*/
+
 		canvas.restore();
 		
 		isDirty = false;
@@ -472,11 +534,15 @@ public class World implements IWorld {
 	public RectF getCamera() {
 		
 		if (camera == null) {
+
 			camera = new RectF();
+
 			camera.left = 0;
 			camera.right = VIEWPORT_SIZE_X;
 			camera.top = 0;
 			camera.bottom = VIEWPORT_SIZE_Y;
+
+			updateCamera();
 		}
 		
 		return camera;
@@ -500,16 +566,30 @@ public class World implements IWorld {
 		}
 		
 		//System.out.println("Enter nextMoment");
+
+		if (movingEntities_buffer_update == null) {
+
+			movingEntities_buffer_update = new ArrayList<>();
+		}
+
+		movingEntities_buffer_update.addAll(movingEntities);
 		
-		movingEntities_buffer.addAll(movingEntities);
-		
-		for (Entity2D_Moving cur: movingEntities_buffer) {
+		for (Entity2D_Moving entity: movingEntities_buffer_update) {
 			//System.out.println("nextMoment: before " + cur);
-			cur.nextMoment(takts);
+
+			if (entity.isRemoved()) {
+
+				movingEntities.remove(entity);
+
+				continue;
+			}
+
+			entity.nextMoment(takts);
+
 			//System.out.println("nextMoment: after " + cur);
 		}
-		
-		movingEntities_buffer.clear();
+
+		movingEntities_buffer_update.clear();
 		
 		//System.out.println("nextMoment: before camera");
 		updateCamera();
@@ -526,8 +606,11 @@ public class World implements IWorld {
 	private void updateCamera() {
 		
 		
-		float camX = playerEntity.getX() + (playerEntity.getEnvelop().right - playerEntity.getEnvelop().left) / 2 - VIEWPORT_SIZE_X / 2;
-		float camY = playerEntity.getY() + (playerEntity.getEnvelop().bottom - playerEntity.getEnvelop().top) / 2 - VIEWPORT_SIZE_Y / 2;
+		float camX = playerEntity.getX()
+				+ (playerEntity.getEnvelop().right - playerEntity.getEnvelop().left) / 2 - VIEWPORT_SIZE_X / 2;
+
+		float camY = playerEntity.getY()
+				+ (playerEntity.getEnvelop().bottom - playerEntity.getEnvelop().top) / 2 - VIEWPORT_SIZE_Y / 2;
 		
 		
 		if (camX > offsetMaxX) {
@@ -562,6 +645,7 @@ public class World implements IWorld {
 	public float getCellSize() {
 		return cell_size;
 	}
+
 
 	@Override
 	public synchronized Entity2D_Ground getTerrainCell(int x, int y) {

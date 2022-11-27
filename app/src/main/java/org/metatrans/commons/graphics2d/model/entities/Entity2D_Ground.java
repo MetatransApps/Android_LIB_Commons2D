@@ -15,9 +15,9 @@ public abstract class Entity2D_Ground extends Entity2D_Base {
 	private int index_y;
 
 	
-	public Entity2D_Ground(IWorld world, RectF _evelop, int _subtype, int _index_x, int _index_y) {
+	public Entity2D_Ground(IWorld world, RectF _envelop, int _subtype, int _index_x, int _index_y) {
 
-		super(world, _evelop, _subtype);
+		super(world, _envelop, _subtype);
 
 		index_x = _index_x;
 		index_y = _index_y;
