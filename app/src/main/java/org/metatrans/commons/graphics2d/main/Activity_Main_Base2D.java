@@ -175,8 +175,6 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 	@Override
 	protected void onPause() {
 		
-		Application_2D_Base.getInstance().storeGameData();
-		
 		
 		isActivityActive = false;
 		
@@ -187,7 +185,10 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 		
 		List<Runnable> rejected = executor.shutdownNow();
 		executor = null;
-		
+
+
+		Application_2D_Base.getInstance().storeGameData();
+
 		
 		super.onPause();
 	}

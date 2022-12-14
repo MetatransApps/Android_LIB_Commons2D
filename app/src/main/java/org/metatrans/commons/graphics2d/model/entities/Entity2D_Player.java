@@ -10,6 +10,7 @@ import org.metatrans.commons.graphics2d.app.Application_2D_Base;
 import org.metatrans.commons.graphics2d.model.GameData;
 import org.metatrans.commons.graphics2d.model.UserSettings;
 import org.metatrans.commons.graphics2d.model.World;
+import org.metatrans.commons.model.BitmapCache_Base;
 
 import android.app.Activity;
 import android.graphics.Canvas;
@@ -41,8 +42,8 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 		collectedEntities 			= new ArrayList<Entity2D_Collectible>();
 		
 	}
-	
-	
+
+
 	protected boolean isInBornTolerance() {
 		return System.currentTimeMillis() < Application_2D_Base.getInstance().getGameData().timestamp_lastborn + getWorld().getTimeInterval_BornTolerance();
 	}

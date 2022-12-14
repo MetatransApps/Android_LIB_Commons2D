@@ -1,12 +1,13 @@
 package org.metatrans.commons.graphics2d.model.entities;
 
 
+import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.metatrans.commons.graphics2d.model.BitmapCache_Base;
 import org.metatrans.commons.graphics2d.model.World;
+import org.metatrans.commons.model.BitmapCache_Base;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -46,17 +47,19 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 
 	protected volatile boolean removed;
 
-	private SecureRandom random1;
-	private SecureRandom random2;
+	protected SecureRandom random1;
+	protected SecureRandom random2;
+
+	private BitmapTransformationConfig transform_config;
 
 
-	public Entity2D_Moving(World _world, RectF _evelop, int _subtype,
+	public Entity2D_Moving(World _world, RectF _envelop, int _subtype,
 						   List<? extends IEntity2D> _blockerEntities,
 						   List<? extends IEntity2D> _killerEntities,
 						   int _bitmap_id,
 						   int _rotation_angle_in_degrees) {
 
-		super(_world, _evelop, _subtype);
+		super(_world, _envelop, _subtype);
 
 		blockerEntities = _blockerEntities;
 		killerEntities = _killerEntities;
@@ -160,6 +163,32 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 
 
 	@Override
+	public RectF getEnvelop_ForDraw() {
+
+		RectF rect_org = getEnvelop();
+
+
+		float width = 1 * (rect_org.right - rect_org.left);
+		float height = 1 * (rect_org.bottom - rect_org.top);
+
+		float shift_y = height * (getTransform_config().ENVELOP_DRAW_DOWNSIDE - getTransform_config().ENVELOP_DRAW_UPSIDE);
+
+
+		if (envelop_ForDraw == null) {
+
+			envelop_ForDraw = new RectF();
+		}
+
+		envelop_ForDraw.left = rect_org.left - (width * (getTransform_config().ENVELOP_DRAW_EXTENSION - 1));
+		envelop_ForDraw.top = shift_y + rect_org.top - (height * (getTransform_config().ENVELOP_DRAW_EXTENSION - 1));
+		envelop_ForDraw.right = rect_org.right + (width * (getTransform_config().ENVELOP_DRAW_EXTENSION - 1));
+		envelop_ForDraw.bottom = shift_y + rect_org.bottom + (height * (getTransform_config().ENVELOP_DRAW_EXTENSION - 1));
+
+		return envelop_ForDraw;
+	}
+
+
+	@Override
 	public void draw(Canvas c) {
 
 		//super.draw(c);
@@ -194,7 +223,7 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 				random2 = new SecureRandom();
 			}
 
-			getPaint().setColor(getRandomColor(random2));
+			getPaint().setColor(getBaseColor());
 			getPaint().setStyle(Paint.Style.FILL);
 
 			c.drawCircle(getEnvelop_ForDraw().left + (getEnvelop_ForDraw().right - getEnvelop_ForDraw().left) / 2,
@@ -215,15 +244,15 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 	}
 
 
-	private int getRandomColor(SecureRandom random) {
+	protected int getBaseColor() {
 
-		int rand = random.nextInt();
+		int rand = random2.nextInt();
 		byte[] bytes = intToByteArray(rand);
 		return Color.argb(bytes[0], bytes[1], bytes[2], bytes[3]);
 	}
 
 
-	byte[] intToByteArray(int data) {
+	protected byte[] intToByteArray(int data) {
 
 		byte[] bytes = new byte[4];
 
@@ -462,5 +491,34 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 			test_newposition = new RectF();
 		}
 		return test_newposition;
+	}
+
+	public BitmapTransformationConfig getTransform_config() {
+
+		if (transform_config == null) {
+
+			transform_config = new BitmapTransformationConfig(0.5f, 1.0f);
+		}
+
+		return transform_config;
+	}
+
+
+	protected static final class BitmapTransformationConfig implements Serializable {
+
+
+		private static final long serialVersionUID = 5936821905527333582L;
+
+
+		private float ENVELOP_DRAW_UPSIDE;
+		private float ENVELOP_DRAW_DOWNSIDE;
+		private float ENVELOP_DRAW_EXTENSION;
+
+		public BitmapTransformationConfig(float upside, float extension) {
+
+			ENVELOP_DRAW_UPSIDE = upside;
+			ENVELOP_DRAW_DOWNSIDE = 1 - ENVELOP_DRAW_UPSIDE;
+			ENVELOP_DRAW_EXTENSION = extension;
+		}
 	}
 }

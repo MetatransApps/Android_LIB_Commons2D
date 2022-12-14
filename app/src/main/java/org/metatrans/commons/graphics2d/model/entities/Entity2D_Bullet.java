@@ -4,6 +4,7 @@ package org.metatrans.commons.graphics2d.model.entities;
 import java.util.List;
 
 import org.metatrans.commons.graphics2d.model.World;
+import org.metatrans.commons.model.BitmapCache_Base;
 
 import android.graphics.RectF;
 
@@ -26,7 +27,7 @@ public abstract class Entity2D_Bullet extends Entity2D_Moving {
 				bitmap_id,
 				rotation_angle_in_degrees);
 	}
-	
+
 	
 	@Override
 	protected void groundContact_X() {

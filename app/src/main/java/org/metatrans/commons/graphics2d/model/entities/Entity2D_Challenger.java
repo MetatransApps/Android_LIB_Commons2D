@@ -4,6 +4,7 @@ package org.metatrans.commons.graphics2d.model.entities;
 import java.util.List;
 
 import org.metatrans.commons.graphics2d.model.World;
+import org.metatrans.commons.model.BitmapCache_Base;
 
 import android.graphics.RectF;
 

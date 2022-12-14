@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.metatrans.commons.app.Application_Base;
 import org.metatrans.commons.cfg.colours.ConfigurationUtils_Colours;
-import org.metatrans.commons.graphics2d.model.entities.I2DBitmapCache;
 import org.metatrans.commons.graphics2d.model.logic.IShapeSet;
 import org.metatrans.commons.graphics2d.model.logic.ShapeSet_Quad;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Collectible;
@@ -16,6 +15,7 @@ import org.metatrans.commons.graphics2d.model.entities.Entity2D_Moving;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Player;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Special;
 import org.metatrans.commons.graphics2d.model.entities.IEntity2D;
+import org.metatrans.commons.model.I2DBitmapCache;
 import org.metatrans.commons.ui.utils.ScreenUtils;
 
 import android.content.Context;
@@ -33,7 +33,7 @@ public abstract class World implements IWorld {
 	private static int MOMENTS_MAX_COUNT = 5;
 	private static long MOMENT_LENGTH = 35;
 	private static int TIME_INTERVAL_BornTolerance = 5 * 1000;
-	
+
 	private float minX = Integer.MAX_VALUE;
 	private float maxX = Integer.MIN_VALUE;
 	private float minY = Integer.MAX_VALUE;
@@ -605,12 +605,18 @@ public abstract class World implements IWorld {
 	
 	private void updateCamera() {
 		
-		
+		if (playerEntity == null) {
+
+			return;
+		}
+
 		float camX = playerEntity.getX()
-				+ (playerEntity.getEnvelop().right - playerEntity.getEnvelop().left) / 2 - VIEWPORT_SIZE_X / 2;
+				+ (playerEntity.getEnvelop().right - playerEntity.getEnvelop().left) / 2
+				- VIEWPORT_SIZE_X / 2;
 
 		float camY = playerEntity.getY()
-				+ (playerEntity.getEnvelop().bottom - playerEntity.getEnvelop().top) / 2 - VIEWPORT_SIZE_Y / 2;
+				+ (playerEntity.getEnvelop().bottom - playerEntity.getEnvelop().top) / 2
+				- VIEWPORT_SIZE_Y / 2;
 		
 		
 		if (camX > offsetMaxX) {
