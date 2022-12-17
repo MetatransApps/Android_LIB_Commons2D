@@ -71,6 +71,12 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 	}
 
 
+	public int getBitmapID() {
+
+		return bitmap_id;
+	}
+
+
 	protected void setRotationStep(int step) {
 
 		cur_bitmap_rotation_step = step;
