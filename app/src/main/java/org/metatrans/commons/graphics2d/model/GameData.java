@@ -9,9 +9,6 @@ public class GameData extends GameData_Base {
 	
 	private static final long serialVersionUID = 3487116550711673913L;
 
-	public static final int MODEL_VERSION_1 	= 0;
-	public static final int MODEL_VERSION_2 	= 1;
-
 	public IWorld world;
 	
 	public long timestamp_lastborn;
@@ -27,7 +24,6 @@ public class GameData extends GameData_Base {
 	
 	public boolean level_completed;
 
-	public int model_version = MODEL_VERSION_2;
 	
 	public GameData() {
 		
