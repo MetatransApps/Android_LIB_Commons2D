@@ -207,6 +207,8 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 		
 		Application_2D_Base.getInstance().recreateGameDataObject();
 
+		//TODO: start Interstitial
+		//TODO: Pause game before open it!!!
 		//Application_Base_Ads.getInstance().openInterstitial();
 	}
 	
