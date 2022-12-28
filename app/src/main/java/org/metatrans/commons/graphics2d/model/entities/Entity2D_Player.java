@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.metatrans.commons.app.Application_Base;
+import org.metatrans.commons.app.Application_Base_Ads;
 import org.metatrans.commons.events.api.IEventsManager;
 import org.metatrans.commons.graphics2d.app.Application_2D_Base;
 import org.metatrans.commons.graphics2d.model.GameData;
@@ -28,6 +29,8 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 	private List<Entity2D_Collectible> collectibleEntities_buffer;
 
 	private List<Entity2D_Collectible> collectedEntities;
+
+	private boolean killed_final;
 
 
 	public Entity2D_Player(World _world, RectF _evelop,
@@ -86,7 +89,16 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 	
 	
 	protected void killedFinal() {
-		
+
+		if (killed_final) {
+
+			return;
+		}
+
+		killed_final = true;
+
+		System.out.println("Entity2D_Player.killedFinal(): " + "called");
+
 		Application_2D_Base.getInstance().getGameData().total_count_steps += Application_2D_Base.getInstance().getGameData().count_steps;
 
 		Application_2D_Base.getInstance().getGameData().count_steps = 0;
@@ -111,19 +123,16 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 				//|| TODO For Gravity Game
 			) {
 
+			System.out.println("Entity2D_Player.killedFinal(): " + "new record");
+
 			Application_Base.getInstance().getEngagementProvider().getLeaderboardsProvider().openLeaderboard(
 					Application_Base.getInstance().getUserSettings().modeID
 				);
-
 		}
 
 
-		/*if (currentActivity != null && getActivityResult_Class() != null) {
-
-			Intent intent = new Intent(currentActivity, getActivityResult_Class());
-
-			currentActivity.startActivity(intent);
-		}*/
+		//TODO: If the ad is not opened and game end, than make sure the game is paused before opening the interstitial ad!
+		Application_Base_Ads.getInstance().openInterstitial();
 	}
 
 
