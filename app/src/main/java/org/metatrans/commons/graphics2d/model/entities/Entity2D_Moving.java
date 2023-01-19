@@ -156,7 +156,7 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 
 				bitmap_rotated = Bitmap.createBitmap(bitmap_org, 0, 0, bitmap_org.getWidth(), bitmap_org.getHeight(), matrix, true);
 
-				((BitmapCache_Base) getWorld().getBitmapCache()).add(rotated_bitmap_id, bitmap_rotated);
+				((BitmapCache_Base) getWorld().getBitmapCache()).addOriginalSize(rotated_bitmap_id, bitmap_rotated);
 			}
 
 			bitmap_rotated_cache[bitmap_index] = bitmap_rotated;

@@ -11,7 +11,6 @@ import org.metatrans.commons.graphics2d.app.Application_2D_Base;
 import org.metatrans.commons.graphics2d.model.GameData;
 import org.metatrans.commons.graphics2d.model.UserSettings;
 import org.metatrans.commons.graphics2d.model.World;
-import org.metatrans.commons.model.BitmapCache_Base;
 
 import android.app.Activity;
 import android.graphics.Canvas;
