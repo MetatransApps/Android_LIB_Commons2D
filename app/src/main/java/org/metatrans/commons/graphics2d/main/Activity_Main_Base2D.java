@@ -121,6 +121,7 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 				System.out.println("Activity_Main_Base2D: RunnableBannerCheck > in loop");
 				
 				try {
+
 					while (isActivityActive) {
 						
 						//System.out.println("Activity_Main_Base2D: RunnableBannerCheck > active=" + Application_2D_Base.getInstance().isCurrentlyGameActiveIntoTheMainScreen() + ", attached=" + isBannerAttached());
@@ -162,6 +163,7 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 					System.out.println("Activity_Main_Base2D: RunnableBannerCheck > exit loop");
 					
 				} catch(Exception e) {
+
 					e.printStackTrace();
 				}
 			}
