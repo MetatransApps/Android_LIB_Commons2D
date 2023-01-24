@@ -189,9 +189,19 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 		executor = null;
 
 
-		Application_2D_Base.getInstance().storeGameData();
+		try {
 
-		
+			//Wait a bit so all interested thread in isActivityActive value are able to react.
+			Thread.sleep(33);
+
+			//In rare case there is a java.util.ConcurrentModificationException
+			Application_2D_Base.getInstance().storeGameData();
+
+		} catch (Throwable t) {
+
+			t.printStackTrace();
+		}
+
 		super.onPause();
 	}
 	
