@@ -37,7 +37,7 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 	private static final int MAIN_VIEW_ID = 32565779;
 	
 	
-	private ExecutorService executor;
+	protected ExecutorService executor;
 	private Handler uiHandler;
 	private boolean isActivityActive;
 	
