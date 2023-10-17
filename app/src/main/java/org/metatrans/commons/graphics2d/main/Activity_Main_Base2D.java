@@ -56,6 +56,12 @@ public abstract class Activity_Main_Base2D extends Activity_Base_Ads_Banner {
 		initUI();
 
 		System.out.println("getWindow().getAttributes()=" + getWindow().getAttributes());
+
+		//Initialize Ads SDKs, including getting Consent where necessary.
+		if (Application_Base.getInstance() instanceof Application_Base_Ads) {
+
+			Application_Base_Ads.getInstance().getAdsManager().requestConsentInfoUpdate(this);
+		}
 	}
 
 
