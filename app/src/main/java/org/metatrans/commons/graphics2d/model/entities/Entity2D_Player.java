@@ -149,7 +149,13 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 	public void addCollectedEntity(Entity2D_Collectible collectedEntity) {
 		collectedEntities.add(collectedEntity);
 	}
-	
+
+
+	protected List<Entity2D_Collectible> getCollectedEntities() {
+
+		return collectedEntities;
+	}
+
 	
 	public boolean hasKey() {
 		
