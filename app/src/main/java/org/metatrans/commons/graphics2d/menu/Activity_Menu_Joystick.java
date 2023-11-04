@@ -86,7 +86,9 @@ public class Activity_Menu_Joystick extends Activity_Base {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			
 			//System.out.println("ColoursSelection POS=" + position + ", id=" + id);
-			
+
+			Application_Base.getInstance().getSFXManager().playSound(R.raw.sfx_button_pressed_2);
+
 			int currOrderNumber = ConfigurationUtils_Joysticks.getOrderNumber(((UserSettings)((Application_Base) getApplication()).getUserSettings()).movejoystick_side);
 
 			if (position != currOrderNumber) {
