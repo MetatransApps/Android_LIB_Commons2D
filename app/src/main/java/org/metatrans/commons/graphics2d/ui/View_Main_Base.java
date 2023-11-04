@@ -473,7 +473,11 @@ public abstract class View_Main_Base extends View_Surface_Base {
 		
 		
 		if (rectf_button_menu.contains(x, y)) {
+
 			//System.out.prin tln("MENU clicked");
+
+			Application_Base.getInstance().getSFXManager().playSound(R.raw.sfx_button_pressed_1);
+
 			Intent i = new Intent(getActivity(), getMainMenuClass());
 			getActivity().startActivity(i);
 		}
@@ -493,7 +497,9 @@ public abstract class View_Main_Base extends View_Surface_Base {
 		} else if (isGameOver()) {
 			
 			if (rectf_button_center.contains(x, y)) {
-				
+
+				Application_Base.getInstance().getSFXManager().playSound(R.raw.sfx_button_pressed_1);
+
 				//getActivity().startNewGame();
 				
 				AlertDialog.Builder adb = Alerts_Base.createAlertDialog_LoseGame(getActivity(),
@@ -521,7 +527,9 @@ public abstract class View_Main_Base extends View_Surface_Base {
 		} else {
 			
 			if (rectf_button_new_small.contains(x, y)) {
-				
+
+				Application_Base.getInstance().getSFXManager().playSound(R.raw.sfx_button_pressed_1);
+
 				final boolean paused_backup = Application_2D_Base.getInstance().getGameData().paused;
 				Application_2D_Base.getInstance().getGameData().paused = true;
 				
@@ -552,10 +560,16 @@ public abstract class View_Main_Base extends View_Surface_Base {
 			}
 			
 			if (rectf_button_pause.contains(x, y)) {
+
+				Application_Base.getInstance().getSFXManager().playSound(R.raw.sfx_button_pressed_1);
+
 				Application_2D_Base.getInstance().getGameData().paused = true;
 			}
 			
 			if (rectf_button_center.contains(x, y)) {
+
+				Application_Base.getInstance().getSFXManager().playSound(R.raw.sfx_button_pressed_1);
+
 				Application_2D_Base.getInstance().getGameData().paused = false;
 			}
 		}
