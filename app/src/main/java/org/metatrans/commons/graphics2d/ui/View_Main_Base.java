@@ -486,7 +486,9 @@ public abstract class View_Main_Base extends View_Surface_Base {
 		if (isLevelCompleted()) {
 			
 			if (rectf_button_center.contains(x, y)) {
-				
+
+				Application_Base.getInstance().getSFXManager().playSound(R.raw.sfx_button_pressed_1);
+
 				Application_2D_Base.getInstance().getGameData().level_completed = false;
 				Application_2D_Base.getInstance().getGameData().timestamp_lastborn = System.currentTimeMillis();
 				
