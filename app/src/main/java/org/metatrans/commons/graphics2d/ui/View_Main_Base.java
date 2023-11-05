@@ -509,16 +509,10 @@ public abstract class View_Main_Base extends View_Surface_Base {
 						new DialogInterface.OnClickListener() {
 							
 							public void onClick(DialogInterface dialog, int which) {
-								
+
+								Application_Base.getInstance().getSFXManager().playSound(R.raw.sfx_button_pressed_1);
+
 								getActivity().startNewGame();
-								
-							}
-						},
-						
-						new DialogInterface.OnClickListener() {
-							
-							public void onClick(DialogInterface dialog, int which) {
-								
 							}
 						}
 				);
@@ -541,6 +535,8 @@ public abstract class View_Main_Base extends View_Surface_Base {
 							
 							public void onClick(DialogInterface dialog, int which) {
 
+								Application_Base.getInstance().getSFXManager().playSound(com.commons2d.R.raw.sfx_button_pressed_1);
+
 								Application_2D_Base.getInstance().getGameData().paused = false;
 								
 								getActivity().startNewGame();
@@ -551,9 +547,10 @@ public abstract class View_Main_Base extends View_Surface_Base {
 						new DialogInterface.OnClickListener() {
 							
 							public void onClick(DialogInterface dialog, int which) {
-								
+
+								Application_Base.getInstance().getSFXManager().playSound(com.commons2d.R.raw.sfx_button_pressed_1);
+
 								Application_2D_Base.getInstance().getGameData().paused = paused_backup;
-								
 							}
 						}
 				);
