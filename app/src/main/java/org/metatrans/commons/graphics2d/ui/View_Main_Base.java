@@ -563,6 +563,8 @@ public abstract class View_Main_Base extends View_Surface_Base {
 				Application_Base.getInstance().getSFXManager().playSound(R.raw.sfx_button_pressed_1);
 
 				Application_2D_Base.getInstance().getGameData().paused = true;
+
+				Application_Base.getInstance().getMelodiesManager().stop();
 			}
 			
 			if (rectf_button_center.contains(x, y)) {
@@ -570,6 +572,8 @@ public abstract class View_Main_Base extends View_Surface_Base {
 				Application_Base.getInstance().getSFXManager().playSound(R.raw.sfx_button_pressed_1);
 
 				Application_2D_Base.getInstance().getGameData().paused = false;
+
+				Application_Base.getInstance().getMelodiesManager().setMelody(Application_Base.getInstance().getUserSettings().melody_cfg_id);
 			}
 		}
 	}
