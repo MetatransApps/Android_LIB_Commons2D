@@ -139,7 +139,7 @@ public class View_Surface_Base extends SurfaceView implements SurfaceHolder.Call
 		
 		if (Application_Base.getInstance().isTestMode()) {
 			
-			int[] screen_size = ScreenUtils.getScreenSize((Activity) getContext());
+			int[] screen_size = ScreenUtils.getScreenSize();
 			int screen_height = Math.min(screen_size[0], screen_size[1]);
 			int cell_size = (int) getWorld().getCellSize();
 			int y = screen_height - cell_size / 2 - 20 / 2;//455;
@@ -175,7 +175,7 @@ public class View_Surface_Base extends SurfaceView implements SurfaceHolder.Call
 	        
 	        camera = new Rect();
 	        
-			int[] screen_size = ScreenUtils.getScreenSize((Activity) getContext());
+			int[] screen_size = ScreenUtils.getScreenSize();
 			int main_width = Math.max(screen_size[0], screen_size[1]);
 			int main_height = Math.min(screen_size[0], screen_size[1]);
 			
