@@ -3,8 +3,10 @@ plugins {
 }
 
 android {
+
+    namespace "com.commons2d"
+
     compileSdkVersion 30
-    buildToolsVersion "30.0.3"
 
     defaultConfig {
 
