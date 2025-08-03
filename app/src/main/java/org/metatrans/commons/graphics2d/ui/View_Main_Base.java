@@ -127,7 +127,7 @@ public abstract class View_Main_Base extends View_Surface_Base {
 	
 	protected void initializeDimensions() {
 		
-		int[] screen_size = ScreenUtils.getScreenSize();
+		int[] screen_size = ScreenUtils.getScreenSize(getContext());
 		int main_width = Math.max(screen_size[0], screen_size[1]);
 		int main_height = Math.min(screen_size[0], screen_size[1]);
 		

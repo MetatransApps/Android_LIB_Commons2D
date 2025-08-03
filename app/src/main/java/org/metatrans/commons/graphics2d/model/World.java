@@ -134,7 +134,7 @@ public abstract class World implements IWorld {
 
 	private void init(Context _activity) {
 
-		int[] size_xy 					= ScreenUtils.getScreenSize();
+		int[] size_xy 					= ScreenUtils.getScreenSize(_activity);
 		VIEWPORT_SIZE_X 				= Math.max(size_xy[0], size_xy[1]);
 		VIEWPORT_SIZE_Y 				= Math.min(size_xy[0], size_xy[1]);
 		

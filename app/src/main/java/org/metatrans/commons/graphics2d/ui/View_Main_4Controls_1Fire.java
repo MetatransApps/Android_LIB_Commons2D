@@ -67,7 +67,7 @@ public class View_Main_4Controls_1Fire extends View_Surface_Base {
 	
 	private void initializeDimensions() {
 		
-		int[] screen_size = ScreenUtils.getScreenSize();
+		int[] screen_size = ScreenUtils.getScreenSize(getContext());
 		int main_width = Math.max(screen_size[0], screen_size[1]);
 		int main_height = Math.min(screen_size[0], screen_size[1]);
 		
