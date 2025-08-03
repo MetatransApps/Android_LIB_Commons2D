@@ -114,12 +114,12 @@ public abstract class View_Main_Base extends View_Surface_Base {
 		
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		
-		if (!initialized) {
+		//if (!initialized) {
 			
 			initializeDimensions();
 			
-			initialized = true;
-		}
+			//initialized = true;
+		//}
 		
 		this.setMeasuredDimension( (int) (rectf_main.right - rectf_main.left), (int) (rectf_main.bottom - rectf_main.top) );
 	}
