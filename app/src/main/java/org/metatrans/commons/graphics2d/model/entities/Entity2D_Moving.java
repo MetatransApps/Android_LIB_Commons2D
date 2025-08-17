@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.metatrans.commons.graphics2d.model.World;
+import org.metatrans.commons.graphics2d.model.logic.IShapeSet;
+import org.metatrans.commons.graphics2d.model.logic.ShapeSet_Linear;
+import org.metatrans.commons.graphics2d.model.logic.ShapeSet_Matrix;
+import org.metatrans.commons.graphics2d.model.logic.ShapeSet_Quad;
 import org.metatrans.commons.model.BitmapCache_Base;
 
 import android.graphics.Bitmap;
@@ -31,6 +35,8 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 
 	private List<? extends IEntity2D> blockerEntities;
 	private List<? extends IEntity2D> killerEntities;
+
+	private transient IShapeSet blockers_set;
 
 	private transient RectF test_newposition;
 
@@ -480,7 +486,25 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 
 		blockers_tester.clear();
 
-		getWorld().getBlockersSet().intersect(blockers_tester, test, true);
+		//getWorld().getBlockersSet().intersect(blockers_tester, test, true);
+
+		if (blockers_set == null) {
+
+			if (blockerEntities.size() >= 64) {
+
+				blockers_set = new ShapeSet_Quad(blockerEntities);
+
+			} else if (blockerEntities.size() >= 16) {
+
+				blockers_set = new ShapeSet_Matrix(blockerEntities);
+
+			} else {
+
+				blockers_set = new ShapeSet_Linear(blockerEntities);
+			}
+		}
+
+		blockers_set.intersect(blockers_tester, test, true);
 
 		return blockers_tester.size() == 0;
 	}
