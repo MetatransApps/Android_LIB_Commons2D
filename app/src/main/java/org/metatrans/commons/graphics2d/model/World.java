@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.metatrans.commons.app.Application_Base;
 import org.metatrans.commons.cfg.colours.ConfigurationUtils_Colours;
+import org.metatrans.commons.graphics2d.model.entities.Entity2D_Clickable;
 import org.metatrans.commons.graphics2d.model.logic.IShapeSet;
 import org.metatrans.commons.graphics2d.model.logic.ShapeSet_Quad;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Collectible;
@@ -61,6 +62,7 @@ public abstract class World implements IWorld {
 	private List<Entity2D_Moving> movingEntities;
 	private List<Entity2D_Moving> movingEntities_buffer_draw;
 	private List<Entity2D_Moving> movingEntities_buffer_update;
+	private List<Entity2D_Clickable> clickableEntities;
 	private List<Entity2D_Special> specialEntities;
 	
 	private Entity2D_Player playerEntity;
@@ -144,6 +146,7 @@ public abstract class World implements IWorld {
 		groundEntities_Feeding 			= new ArrayList<Entity2D_Ground>();
 		collectibleEntities 			= new ArrayList<Entity2D_Collectible>();
 		movingEntities 					= new ArrayList<Entity2D_Moving>();
+		clickableEntities 				= new ArrayList<Entity2D_Clickable>();
 		movingEntities_buffer_draw		= new ArrayList<Entity2D_Moving>();
 		movingEntities_buffer_update 	= new ArrayList<Entity2D_Moving>();
 		specialEntities 				= new ArrayList<Entity2D_Special>();
@@ -218,8 +221,35 @@ public abstract class World implements IWorld {
 	public List<Entity2D_Moving> getMovingEntities() {
 		return movingEntities;
 	}
-	
-	
+
+
+	@Override
+	public List<Entity2D_Clickable> getClickableEntities() {
+		return clickableEntities;
+	}
+
+
+	@Override
+	public Entity2D_Clickable getClickableEntity(float x, float y) {
+
+		int total_x = (int) (getCamera().left + x);
+		int total_y = (int) (getCamera().top + y);
+
+		for (Entity2D_Clickable clickable: clickableEntities) {
+
+			if (total_x >= clickable.getEnvelop().left
+					&&  total_x <= clickable.getEnvelop().right
+					&&  total_y >= clickable.getEnvelop().top
+					&&  total_y <= clickable.getEnvelop().bottom) {
+
+				return clickable;
+			}
+		}
+
+		return null;
+	}
+
+
 	/* (non-Javadoc)
 	 * @see org.metatrans.commons.graphics2d.model.IWorld#addEntity(org.metatrans.commons.graphics2d.model.entities.IEntity2D)
 	 */
@@ -252,7 +282,16 @@ public abstract class World implements IWorld {
 		} else if (entity instanceof Entity2D_Moving) {
 
 			movingEntities.add((Entity2D_Moving) entity);
-			
+
+			if (entity instanceof Entity2D_Clickable) {
+
+				if (entity.getType() != IEntity2D.TYPE_MOVING || entity.getSubType() != IEntity2D.SUBTYPE_MOVING_CLICKABLE) {
+					throw new IllegalStateException();
+				}
+
+				clickableEntities.add((Entity2D_Clickable) entity);
+			}
+
 			//System.out.println("Adding 2D moving entity: " + entity);
 			
 			if (entity instanceof Entity2D_Player) {
@@ -269,7 +308,6 @@ public abstract class World implements IWorld {
 		} else if (entity instanceof Entity2D_Special) {
 			
 			specialEntities.add((Entity2D_Special) entity);
-			
 		}
 
 

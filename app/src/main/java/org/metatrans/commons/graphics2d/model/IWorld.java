@@ -4,6 +4,7 @@ package org.metatrans.commons.graphics2d.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.metatrans.commons.graphics2d.model.entities.Entity2D_Clickable;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Collectible;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Ground;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Moving;
@@ -17,9 +18,6 @@ import android.graphics.RectF;
 
 public interface IWorld extends Serializable {
 
-	//public abstract void setActivity(Context context);
-	
-	//public abstract Context getActivity();
 
 	public abstract void addEntity(IEntity2D entity);
 	public abstract void removeMovingEntity(Entity2D_Moving entity);
@@ -32,9 +30,11 @@ public interface IWorld extends Serializable {
 	public abstract List<Entity2D_Collectible> getCollectibleEntities();
 	public abstract List<Entity2D_Special> getSpecialEntities();
 	public abstract List<Entity2D_Moving> getMovingEntities();
+	public abstract List<Entity2D_Clickable> getClickableEntities();
 	public abstract Entity2D_Player getPlayerEntity();
-	
-	
+
+	public abstract Entity2D_Clickable getClickableEntity(float x, float y);
+
 	public abstract void update();
 	
 	public abstract void draw(Canvas canvas);
