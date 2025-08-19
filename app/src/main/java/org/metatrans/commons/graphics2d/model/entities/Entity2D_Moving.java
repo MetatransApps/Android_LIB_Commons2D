@@ -126,6 +126,11 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 	@Override
 	public Bitmap getBitmap() {
 
+		if (bitmap_id == -1) {
+
+			return null;
+		}
+
 		if (bitmap_id != bitmap_id_backup || bitmap_org == null) {
 
 			bitmap_id_backup = bitmap_id;
@@ -507,6 +512,12 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 		blockers_set.intersect(blockers_tester, test, true);
 
 		return blockers_tester.size() == 0;
+	}
+
+
+	protected void clearBlockersSet() {
+
+		blockers_set = null;
 	}
 
 

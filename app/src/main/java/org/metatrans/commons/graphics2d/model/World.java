@@ -553,6 +553,7 @@ public abstract class World implements IWorld {
 	@Override
 	public synchronized void removeMovingEntity(Entity2D_Moving entity) {
 		movingEntities.remove(entity);
+		clickableEntities.remove(entity);
 	}
 	
 	
@@ -563,8 +564,15 @@ public abstract class World implements IWorld {
 	public synchronized void removeCollectibleEntity(Entity2D_Collectible entity) {
 		collectibleEntities.remove(entity);
 	}
-	
-	
+
+
+	@Override
+	public void removeGroundEntity_Solid(Entity2D_Ground entity) {
+		groundEntities.remove(entity);
+		groundEntities_Solid.remove(entity);
+	}
+
+
 	/* (non-Javadoc)
 	 * @see org.metatrans.commons.graphics2d.model.IWorld#getCamera()
 	 */

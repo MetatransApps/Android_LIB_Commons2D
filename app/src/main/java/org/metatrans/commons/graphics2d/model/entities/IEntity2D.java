@@ -20,7 +20,8 @@ public interface IEntity2D extends Serializable {
 	public static final int SUBTYPE_MOVING_CHALLENGER	= 2;
 	public static final int SUBTYPE_MOVING_BULLET		= 3;
 	public static final int SUBTYPE_MOVING_CLICKABLE	= 4;
-	
+	public static final int SUBTYPE_MOVING_TEXT			= 5;
+
 	public static final int SUBTYPE_GROUND_WALL			= 1;
 	public static final int SUBTYPE_GROUND_EMPTY		= 2;
 	public static final int SUBTYPE_GROUND_FEEDING		= 3;

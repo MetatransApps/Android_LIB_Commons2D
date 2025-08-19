@@ -22,7 +22,7 @@ public interface IWorld extends Serializable {
 	public abstract void addEntity(IEntity2D entity);
 	public abstract void removeMovingEntity(Entity2D_Moving entity);
 	public abstract void removeCollectibleEntity(Entity2D_Collectible entity);
-
+	public abstract void removeGroundEntity_Solid(Entity2D_Ground entity);
 	
 	public abstract List<Entity2D_Ground> getGroundEntities();
 	public abstract List<Entity2D_Ground> getGroundEntities_SolidOnly();
