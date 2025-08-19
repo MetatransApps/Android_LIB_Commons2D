@@ -4,6 +4,7 @@ package org.metatrans.commons.graphics2d.model.entities;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 
 import org.metatrans.commons.graphics2d.model.World;
 
@@ -44,7 +45,8 @@ public class Entity2D_Text extends Entity2D_Moving {
         //super.draw(c);
 
         getPaint().setAntiAlias(true);
-        getPaint().setTextAlign(Paint.Align.LEFT);        // we'll handle centering manually
+        getPaint().setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
+        getPaint().setTextAlign(Paint.Align.CENTER);
         getPaint().setColor(color);
 
         // measure full text width including spaces

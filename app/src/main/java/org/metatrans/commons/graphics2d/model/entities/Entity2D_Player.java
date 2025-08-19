@@ -167,33 +167,33 @@ public abstract class Entity2D_Player extends Entity2D_Moving {
 		
 		return false;
 	}
-	
-	
+
+
 	@Override
 	public void nextMoment(float takts) {
-		
+
 		super.nextMoment(takts);
-		
+
 		collectibleEntities_buffer.addAll(collectibleEntities);
-		
+
 		for (Entity2D_Collectible cur: collectibleEntities_buffer) {
-			
+
 			if (RectF.intersects(getEnvelop(), cur.getEnvelop())) {
-				
+
 				getWorld().removeCollectibleEntity(cur);
-				
+
 				addCollectedEntity(cur);
-				
+
 				if (cur.getType() == TYPE_COLLECTIBLE && cur.getSubType() == SUBTYPE_COLLECTIBLE_BULLET) {
 					Application_2D_Base.getInstance().getGameData().count_bullets++;
 				}
-				
+
 				if (cur.getType() == TYPE_COLLECTIBLE && cur.getSubType() == SUBTYPE_COLLECTIBLE_STAR) {
 					Application_2D_Base.getInstance().getGameData().count_stars++;
 				}
 			}
 		}
-		
+
 		collectibleEntities_buffer.clear();
 	}
 }
