@@ -7,6 +7,7 @@ import android.graphics.RectF;
 import org.metatrans.commons.graphics2d.model.World;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public abstract class Entity2D_Animation_Repeat extends Entity2D_Moving {
@@ -24,10 +25,10 @@ public abstract class Entity2D_Animation_Repeat extends Entity2D_Moving {
     private int bitmap_id_backup;
 
 
-    public Entity2D_Animation_Repeat(World _world, RectF _envelop,
+    public Entity2D_Animation_Repeat(World _world, RectF _envelop, List<? extends IEntity2D> blockerEntities,
                                      int[] _bitmap_ids) {
 
-        super(_world, _envelop, SUBTYPE_MOVING_CHALLENGER, _world.getGroundEntities_SolidOnly(), new ArrayList<>(),
+        super(_world, _envelop, SUBTYPE_MOVING_CHALLENGER, blockerEntities, new ArrayList<>(),
                 _bitmap_ids[0], 0);
 
         bitmap_ids = _bitmap_ids;

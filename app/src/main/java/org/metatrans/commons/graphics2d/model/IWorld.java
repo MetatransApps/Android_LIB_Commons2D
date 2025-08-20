@@ -63,4 +63,8 @@ public interface IWorld extends Serializable {
 	public int getTimeInterval_BornTolerance();
 
     boolean isOuterBorder(int cell_x, int cell_y);
+
+    float get_WORLD_SIZE_X();
+
+	float get_WORLD_SIZE_Y();
 }

@@ -74,6 +74,9 @@ public abstract class Entity2D_Moving extends Entity2D_Base {
 
 		bitmap_id = _bitmap_id;
 		cur_bitmap_rotation_degrees = _rotation_angle_in_degrees;
+
+		//This is used for entities which are created after the world is created
+		setWorldSize(world.get_WORLD_SIZE_X(), world.get_WORLD_SIZE_Y());
 	}
 
 
