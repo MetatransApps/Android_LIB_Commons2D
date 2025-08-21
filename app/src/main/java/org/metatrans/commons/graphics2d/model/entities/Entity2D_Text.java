@@ -14,16 +14,19 @@ import java.util.ArrayList;
 public class Entity2D_Text extends Entity2D_Moving {
 
 
-    private String text;
+    protected String text;
     private int color;
 
+    private int color_background;
 
-    public Entity2D_Text(World _world, RectF _envelop, String text_initial, int color_initial) {
+
+    public Entity2D_Text(World _world, RectF _envelop, String text_initial, int color_initial, int _color_background) {
 
         super(_world, _envelop, SUBTYPE_MOVING_TEXT, new ArrayList<>(), new ArrayList<>(), -1, 0);
 
         text = text_initial;
         color = color_initial;
+        color_background = _color_background;
     }
 
 
@@ -43,6 +46,12 @@ public class Entity2D_Text extends Entity2D_Moving {
     public void draw(Canvas c) {
 
         //super.draw(c);
+
+        if (color_background != -1) {
+
+            getPaint().setColor(color_background);
+            c.drawRoundRect(getEnvelop(), 20, 20, getPaint());
+        }
 
         getPaint().setAntiAlias(true);
         getPaint().setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
@@ -67,7 +76,7 @@ public class Entity2D_Text extends Entity2D_Moving {
         w = getPaint().measureText(text);
         fm = getPaint().getFontMetrics();
 
-        float x = getEnvelop().centerX() - w / 2f;
+        float x = getEnvelop().centerX(); // - w / 2f;
         float baseline = getEnvelop().centerY() - (fm.ascent + fm.descent) / 2f;
 
         c.drawText(text, x, baseline, getPaint());
