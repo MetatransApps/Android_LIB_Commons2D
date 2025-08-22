@@ -94,12 +94,18 @@ public class ShapeSet_Quad implements IShapeSet {
 		for (int x=0; x < 2; x++) {
 			
 			for (int y=0; y < 2; y++) {
-				
+
+				if (matrix_rects[x][y].equals(test)) {
+
+					continue;
+				}
+
 				if (RectF.intersects(test, matrix_rects[x][y])) {
 					
 					matrix_set[x][y].intersect(result, test, stop_after_first);
 					
 					if (result.size() > 0) {
+
 						if (stop_after_first) return; 
 					}
 				}

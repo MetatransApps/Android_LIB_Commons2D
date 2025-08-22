@@ -83,9 +83,18 @@ public class ShapeSet_Matrix implements IShapeSet {
 				if (RectF.intersects(test, matrix_rects[x][y])) {
 					
 					List<IEntity2D> bucket = matrix_entities[x][y];
+
 					for (IEntity2D cur: bucket) {
+
+						if (cur.getEnvelop().equals(test)) {
+
+							continue;
+						}
+
 						if (RectF.intersects(cur.getEnvelop(), test)) {
+
 							result.add(cur);
+
 							if (stop_after_first) return; 
 						}
 					}
