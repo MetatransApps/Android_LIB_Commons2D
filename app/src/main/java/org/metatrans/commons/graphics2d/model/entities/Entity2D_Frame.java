@@ -59,6 +59,7 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
     @Override
     public void draw(Canvas c) {
 
+
         int rounding = 70;
         int border_margin = 15;
 
@@ -164,9 +165,14 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         getPaint().setStrokeCap(oldCap);
 
 
-        RectF title = new RectF((float) (header.left + 0.25 * title_height), header.top, (float) (header.right - 1.05 * title_height), header.bottom);
+        RectF envelop_title = new RectF(
+                (float) (header.left + 0.25 * title_height),
+                header.top,
+                (float) (header.right - 1.05 * title_height),
+                header.bottom
+        );
 
-        DrawUtils.drawTextInRectangle(c, getPaint(), title, getTitle(), Color.WHITE);
+        DrawUtils.drawTextInRectangle(c, getPaint(), envelop_title, getTitle(), Color.WHITE);
 
 
         envelop_custom_left = (int) (envelop_frame.left + 2 * border_margin);
@@ -174,30 +180,12 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         envelop_custom_right = (int) (envelop_frame.right - 2 * border_margin);
         envelop_custom_bottom = (int) (envelop_frame.bottom - 2 * border_margin);
 
-        /*getPaint().setColor(color_red);
-
-        c.drawRoundRect(
-                new RectF(
-                        envelop_custom_left,
-                        envelop_custom_top,
-                        envelop_custom_right,
-                        envelop_custom_bottom),
-                rounding,
-                rounding,
-                getPaint()
-        );*/
 
         if (last_clicked_x != -1 && last_clicked_y != -1) {
 
             getPaint().setColor(Color.argb(200, 0, 0, 0));
-            //getPaint().setStyle(Paint.Style.STROKE);
-            //getPaint().setStrokeWidth(9);
 
-            c.drawCircle(last_clicked_x,
-                    last_clicked_y,
-                    50,
-                    getPaint());
-
+            c.drawCircle(last_clicked_x, last_clicked_y, 50, getPaint());
         }
     }
 
