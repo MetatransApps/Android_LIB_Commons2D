@@ -15,18 +15,18 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
     private static final long serialVersionUID  = -1291486995621289565L;
 
 
-    int last_clicked_x = -1;
-    int last_clicked_y = -1;
+    private int last_clicked_x = -1;
+    private int last_clicked_y = -1;
 
-    int envelop_close_left;
-    int envelop_close_top;
-    int envelop_close_right;
-    int envelop_close_bottom;
+    private int envelop_close_left;
+    private int envelop_close_top;
+    private int envelop_close_right;
+    private int envelop_close_bottom;
 
-    int envelop_custom_left;
-    int envelop_custom_top;
-    int envelop_custom_right;
-    int envelop_custom_bottom;
+    private int envelop_custom_left;
+    private int envelop_custom_top;
+    private int envelop_custom_right;
+    private int envelop_custom_bottom;
 
 
     public Entity2D_Frame(World _world) {
@@ -56,12 +56,24 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
     }
 
 
+    protected int getRounding() {
+
+        return 70;
+    }
+
+
+    protected int getBorderMargin() {
+
+        return 15;
+    }
+
+
     @Override
     public void draw(Canvas c) {
 
 
-        int rounding = 70;
-        int border_margin = 15;
+        int rounding = getRounding();
+        int border_margin = getBorderMargin();
 
         int color_bg1 = Color.argb(255, 64,191,233);
         int color_bg2 = Color.argb(255, 29,103,167);
@@ -181,12 +193,12 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         envelop_custom_bottom = (int) (envelop_frame.bottom - 2 * border_margin);
 
 
-        if (last_clicked_x != -1 && last_clicked_y != -1) {
+        /*if (last_clicked_x != -1 && last_clicked_y != -1) {
 
             getPaint().setColor(Color.argb(200, 0, 0, 0));
 
             c.drawCircle(last_clicked_x, last_clicked_y, 50, getPaint());
-        }
+        }*/
     }
 
 
