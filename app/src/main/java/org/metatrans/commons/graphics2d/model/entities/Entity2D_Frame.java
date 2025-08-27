@@ -155,7 +155,7 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         getPaint().setStrokeCap(oldCap);
 
 
-        RectF title = new RectF((float) (header.left + 0.25 * title_height), header.top, (float) (header.right - 1.25 * title_height), header.bottom);
+        RectF title = new RectF((float) (header.left + 0.25 * title_height), header.top, (float) (header.right - 1.05 * title_height), header.bottom);
 
         DrawUtils.drawTextInRectangle(c, getPaint(), title, getTitle(), Color.WHITE);
 
