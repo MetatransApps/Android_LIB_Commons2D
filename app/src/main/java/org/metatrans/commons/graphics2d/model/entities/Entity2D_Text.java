@@ -7,6 +7,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 
 import org.metatrans.commons.graphics2d.model.World;
+import org.metatrans.commons.graphics2d.utils.DrawUtils;
 
 import java.util.ArrayList;
 
@@ -53,32 +54,6 @@ public class Entity2D_Text extends Entity2D_Moving {
             c.drawRoundRect(getEnvelop(), 20, 20, getPaint());
         }
 
-        getPaint().setAntiAlias(true);
-        getPaint().setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
-        getPaint().setTextAlign(Paint.Align.CENTER);
-        getPaint().setColor(color);
-
-        // measure full text width including spaces
-        float probeSize = 100f;
-        getPaint().setTextSize(probeSize);
-
-        float w = getPaint().measureText(text);                 // keeps spaces
-        Paint.FontMetrics fm = getPaint().getFontMetrics();
-        float h = fm.descent - fm.ascent;
-
-        float sx = getEnvelop().width() / w;
-        float sy = getEnvelop().height() / h;
-        float scale = Math.min(sx, sy) * 0.98f;
-
-        float finalSize = probeSize * scale;
-        getPaint().setTextSize(finalSize);
-
-        w = getPaint().measureText(text);
-        fm = getPaint().getFontMetrics();
-
-        float x = getEnvelop().centerX(); // - w / 2f;
-        float baseline = getEnvelop().centerY() - (fm.ascent + fm.descent) / 2f;
-
-        c.drawText(text, x, baseline, getPaint());
+        DrawUtils.drawTextInRectangle(c, getPaint(), getEnvelop(), text, color);
     }
 }

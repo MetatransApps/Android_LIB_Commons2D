@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.RectF;
 
 import org.metatrans.commons.graphics2d.model.World;
+import org.metatrans.commons.graphics2d.utils.DrawUtils;
 
 
 public abstract class Entity2D_Frame extends Entity2D_Clickable {
@@ -23,9 +24,9 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
     int envelop_close_bottom;
 
 
-    public Entity2D_Frame(World _world, RectF _envelop) {
+    public Entity2D_Frame(World _world) {
 
-        super(_world, _envelop, -1);
+        super(_world, null, -1);
 
         getWorld().setPopupFrame(this);
     }
@@ -97,12 +98,15 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
 
         getPaint().setColor(color_bg3);
 
+        RectF header = new RectF(
+                envelop_frame.left + border_margin,
+                envelop_frame.top + border_margin,
+                envelop_frame.right - border_margin,
+                envelop_frame.top + title_height - border_margin
+        );
+
         c.drawRoundRect(
-                new RectF(
-                        envelop_frame.left + border_margin,
-                        envelop_frame.top + border_margin,
-                        envelop_frame.right - border_margin,
-                        envelop_frame.top + title_height - border_margin),
+                header,
                 rounding,
                 rounding,
                 getPaint()
@@ -151,6 +155,10 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         getPaint().setStrokeCap(oldCap);
 
 
+        RectF title = new RectF((float) (header.left + 0.25 * title_height), header.top, (float) (header.right - 1.25 * title_height), header.bottom);
+
+        DrawUtils.drawTextInRectangle(c, getPaint(), title, getTitle(), Color.WHITE);
+
 
         if (last_clicked_x != -1 && last_clicked_y != -1) {
 
@@ -179,13 +187,16 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
 
         RectF envelop_camera = getWorld().getCamera();
 
+        int frame_height = (int) (4 * (envelop_camera.bottom - envelop_camera.top) / 5);
+        int frame_width = (int) (2 * (envelop_camera.right - envelop_camera.left) / 5);
+
         int cell_size = (int) getWorld().getCellSize();
         int bar_height = 2 * cell_size;
 
-        float left = envelop_camera.left + (envelop_camera.right - envelop_camera.left) / 4;
-        float top = envelop_camera.top + bar_height / 2 + (envelop_camera.bottom - envelop_camera.top - bar_height / 2) / 8;
-        float right = envelop_camera.right - (envelop_camera.right - envelop_camera.left) / 4;
-        float bottom = envelop_camera.bottom - bar_height / 2 - (envelop_camera.bottom - envelop_camera.top - bar_height / 2) / 8 + bar_height;
+        float left = envelop_camera.left + (envelop_camera.right - envelop_camera.left) / 2 - frame_width / 2;
+        float top = envelop_camera.top + bar_height / 2 + (envelop_camera.bottom - envelop_camera.top) / 2 - frame_height / 2;
+        float right = envelop_camera.left + (envelop_camera.right - envelop_camera.left) / 2 + frame_width / 2;
+        float bottom = envelop_camera.top + bar_height / 2 + (envelop_camera.bottom - envelop_camera.top) / 2 + frame_height / 2;
 
         RectF envelop = new RectF(left, top, right, bottom);
 
