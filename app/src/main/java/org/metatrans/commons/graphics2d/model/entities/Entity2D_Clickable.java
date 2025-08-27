@@ -11,6 +11,9 @@ import java.util.ArrayList;
 public abstract class Entity2D_Clickable extends Entity2D_Moving {
 
 
+    private static final long serialVersionUID  = -7011354995621289565L;
+
+
     public Entity2D_Clickable(World _world, RectF _envelop, int _bitmap_id) {
 
         super(_world, _envelop, SUBTYPE_MOVING_CLICKABLE,
@@ -21,5 +24,5 @@ public abstract class Entity2D_Clickable extends Entity2D_Moving {
     }
 
 
-    public abstract void doAction();
+    public abstract void doAction(int x, int y);
 }
