@@ -23,6 +23,11 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
     int envelop_close_right;
     int envelop_close_bottom;
 
+    int envelop_custom_left;
+    int envelop_custom_top;
+    int envelop_custom_right;
+    int envelop_custom_bottom;
+
 
     public Entity2D_Frame(World _world) {
 
@@ -30,6 +35,9 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
 
         getWorld().setPopupFrame(this);
     }
+
+
+    public abstract String getTitle();
 
 
     @Override
@@ -58,6 +66,7 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         int color_bg2 = Color.argb(255, 29,103,167);
         int color_bg3 = Color.argb(255, 21,82,135);
         int color_red = Color.argb(255,188,15,77);
+
 
         RectF envelop_frame = getEnvelop_ForDraw();
 
@@ -160,6 +169,24 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         DrawUtils.drawTextInRectangle(c, getPaint(), title, getTitle(), Color.WHITE);
 
 
+        envelop_custom_left = (int) (envelop_frame.left + 2 * border_margin);
+        envelop_custom_top = (int) (header.bottom + 2 * border_margin);
+        envelop_custom_right = (int) (envelop_frame.right - 2 * border_margin);
+        envelop_custom_bottom = (int) (envelop_frame.bottom - 2 * border_margin);
+
+        /*getPaint().setColor(color_red);
+
+        c.drawRoundRect(
+                new RectF(
+                        envelop_custom_left,
+                        envelop_custom_top,
+                        envelop_custom_right,
+                        envelop_custom_bottom),
+                rounding,
+                rounding,
+                getPaint()
+        );*/
+
         if (last_clicked_x != -1 && last_clicked_y != -1) {
 
             getPaint().setColor(Color.argb(200, 0, 0, 0));
@@ -204,5 +231,13 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
     }
 
 
-    public abstract String getTitle();
+    protected RectF getCustomEnvelop() {
+
+        return new RectF(
+                envelop_custom_left,
+                envelop_custom_top,
+                envelop_custom_right,
+                envelop_custom_bottom
+        );
+    }
 }
