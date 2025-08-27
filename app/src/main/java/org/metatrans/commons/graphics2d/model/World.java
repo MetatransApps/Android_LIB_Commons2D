@@ -7,6 +7,7 @@ import java.util.List;
 import org.metatrans.commons.app.Application_Base;
 import org.metatrans.commons.cfg.colours.ConfigurationUtils_Colours;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Clickable;
+import org.metatrans.commons.graphics2d.model.entities.Entity2D_Frame;
 import org.metatrans.commons.graphics2d.model.logic.IShapeSet;
 import org.metatrans.commons.graphics2d.model.logic.ShapeSet_Quad;
 import org.metatrans.commons.graphics2d.model.entities.Entity2D_Collectible;
@@ -91,6 +92,8 @@ public abstract class World implements IWorld {
 	private transient Paint paint_background;
 
 	private transient I2DBitmapCache bitmap_cache;
+
+	private Entity2D_Frame popup_frame;
 
 
 	public World(Context _activity, int _maze_size_x, int _maze_size_y) {
@@ -231,6 +234,13 @@ public abstract class World implements IWorld {
 
 	@Override
 	public Entity2D_Clickable getClickableEntity(float x, float y) {
+
+		Entity2D_Frame popup_frame = getPopupFrame();
+
+		if (popup_frame != null) {
+
+			return popup_frame;
+		}
 
 		int total_x = (int) (getCamera().left + x);
 		int total_y = (int) (getCamera().top + y);
@@ -434,6 +444,11 @@ public abstract class World implements IWorld {
 				continue;
 			}
 
+			if (entity instanceof Entity2D_Frame) {
+
+				continue;
+			}
+
 
 			if (isInsideCamera(entity.getEnvelop())) {
 
@@ -449,14 +464,12 @@ public abstract class World implements IWorld {
 		}
 
 
-		/*paint_background.setColor(Color.RED);
-		paint_background.setAlpha(128);
+		Entity2D_Frame frame = getPopupFrame();
 
-		canvas.drawCircle(VIEWPORT_SIZE_X / 2,
-				VIEWPORT_SIZE_Y / 2,
-				20,
-				paint_background);
-		*/
+		if (frame != null) {
+
+			frame.draw(canvas);
+		}
 
 		canvas.restore();
 		
@@ -777,5 +790,28 @@ public abstract class World implements IWorld {
 				|| cell_x == terrain_entities.length - 1
 				|| cell_y == 0
 				|| (terrain_entities[0] != null && cell_y == terrain_entities[0].length - 1);
+	}
+
+
+	public Entity2D_Frame getPopupFrame() {
+
+		return popup_frame;
+	}
+
+
+	public void setPopupFrame(Entity2D_Frame frame) {
+
+		if (popup_frame != null) {
+
+			throw new IllegalStateException();
+		}
+
+		popup_frame = frame;
+	}
+
+
+	public void clearPopupFrame() {
+
+		popup_frame = null;
 	}
 }
