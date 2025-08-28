@@ -106,7 +106,7 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         );
 
 
-        int title_height = (int) (1 * (envelop_frame.bottom - envelop_frame.top) / 5);
+        int title_height = (int) (2.5 * getWorld().getCellSize()); //(int) (1 * (envelop_frame.bottom - envelop_frame.top) / 5);
 
         getPaint().setColor(color_bg1);
 
@@ -164,7 +164,7 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         float cx = envelop_frame.right - title_height / 2f;
         float cy = envelop_frame.top + title_height / 2f;
         float r  = title_height / 2f - border_margin;
-        float a  = r * 0.55f; // keep a bit of padding from the circle edge
+        float a  = r * 0.39f; // keep a bit of padding from the circle edge
 
         // Two lines forming an X
         c.drawLine(cx - a, cy - a, cx + a, cy + a, getPaint());
@@ -197,12 +197,12 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         envelop_custom_bottom = (int) (envelop_frame.bottom - 2 * border_margin);
 
 
-        if (last_clicked_x != -1 && last_clicked_y != -1) {
+        /*if (last_clicked_x != -1 && last_clicked_y != -1) {
 
             getPaint().setColor(Color.argb(200, 0, 0, 0));
 
             c.drawCircle(last_clicked_x, last_clicked_y, 50, getPaint());
-        }
+        }*/
     }
 
 
