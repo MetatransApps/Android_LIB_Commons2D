@@ -28,10 +28,14 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
     private int envelop_custom_right;
     private int envelop_custom_bottom;
 
+    private int frame_height;
 
-    public Entity2D_Frame(World _world) {
+
+    public Entity2D_Frame(World _world, int _frame_height) {
 
         super(_world, null, -1);
+
+        frame_height = _frame_height;
 
         getWorld().setPopupFrame(this);
     }
@@ -214,7 +218,7 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
 
         RectF envelop_camera = getWorld().getCamera();
 
-        int frame_height = (int) (4 * (envelop_camera.bottom - envelop_camera.top) / 5);
+        //int frame_height = (int) (4 * (envelop_camera.bottom - envelop_camera.top) / 5);
         int frame_width = (int) (2 * (envelop_camera.right - envelop_camera.left) / 5);
 
         int cell_size = (int) getWorld().getCellSize();
