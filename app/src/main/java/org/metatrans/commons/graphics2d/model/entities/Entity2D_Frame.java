@@ -51,8 +51,8 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         }
 
 
-        last_clicked_x = x;
-        last_clicked_y = y;
+        last_clicked_x = (int) (getWorld().getCamera().left + x);
+        last_clicked_y = (int) (getWorld().getCamera().top + y);
     }
 
 
@@ -166,10 +166,10 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         c.drawLine(cx - a, cy - a, cx + a, cy + a, getPaint());
         c.drawLine(cx - a, cy + a, cx + a, cy - a, getPaint());
 
-        envelop_close_left = (int) (cx - 2 * a);
-        envelop_close_right = (int) (cx + 2 * a);
-        envelop_close_top = (int) (cy - 2 * a);
-        envelop_close_bottom = (int) (cy + 2 * a);
+        envelop_close_left = (int) (-getWorld().getCamera().left + cx - 2 * a);
+        envelop_close_top = (int) (-getWorld().getCamera().top + cy - 2 * a);
+        envelop_close_right = (int) (-getWorld().getCamera().left + cx + 2 * a);
+        envelop_close_bottom = (int) (-getWorld().getCamera().top + cy + 2 * a);
 
         // Restore paint
         getPaint().setStyle(oldStyle);
@@ -193,12 +193,12 @@ public abstract class Entity2D_Frame extends Entity2D_Clickable {
         envelop_custom_bottom = (int) (envelop_frame.bottom - 2 * border_margin);
 
 
-        /*if (last_clicked_x != -1 && last_clicked_y != -1) {
+        if (last_clicked_x != -1 && last_clicked_y != -1) {
 
             getPaint().setColor(Color.argb(200, 0, 0, 0));
 
             c.drawCircle(last_clicked_x, last_clicked_y, 50, getPaint());
-        }*/
+        }
     }
 
 
