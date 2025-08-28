@@ -95,6 +95,8 @@ public abstract class World implements IWorld {
 
 	private Entity2D_Frame popup_frame;
 
+	private boolean stopped;
+
 
 	public World(Context _activity, int _maze_size_x, int _maze_size_y) {
 
@@ -102,6 +104,12 @@ public abstract class World implements IWorld {
 		maze_size_y = _maze_size_y;
 
 		init(_activity);
+	}
+
+
+	public void setStopped(boolean _stopped) {
+
+		stopped = _stopped;
 	}
 
 
@@ -613,7 +621,12 @@ public abstract class World implements IWorld {
 	 */
 	@Override
 	public synchronized void update() {
-		
+
+		if (stopped) {
+
+			return;
+		}
+
 		float takts = (System.currentTimeMillis() - timestamp_lastupdate) / (float) MOMENT_LENGTH;
 		
 		if (takts < 1f) {
