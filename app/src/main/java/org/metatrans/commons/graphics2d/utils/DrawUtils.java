@@ -40,17 +40,14 @@ public class DrawUtils {
         w = p.measureText(text);
         fm = p.getFontMetrics();
 
-        float x = 0;
-        if (align.equals(Paint.Align.LEFT)) {
-
-            x = envelop.centerX() - w / 2f;
-
-        } else if (align.equals(Paint.Align.CENTER)) {
-
+        float x;
+        if (align == Paint.Align.LEFT) {
+            x = envelop.left;
+        } else if (align == Paint.Align.CENTER) {
             x = envelop.centerX();
-
+        } else if (align == Paint.Align.RIGHT) {
+            x = envelop.right;
         } else {
-
             throw new IllegalStateException();
         }
 
