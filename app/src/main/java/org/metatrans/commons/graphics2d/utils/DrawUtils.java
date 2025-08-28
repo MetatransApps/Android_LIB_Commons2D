@@ -12,9 +12,14 @@ public class DrawUtils {
 
     public static void drawTextInRectangle(Canvas c, Paint p, RectF envelop, String text, int color) {
 
+        drawTextInRectangle(c, p, envelop, text, color, Paint.Align.CENTER);
+    }
+
+    public static void drawTextInRectangle(Canvas c, Paint p, RectF envelop, String text, int color, Paint.Align align) {
+
         p.setAntiAlias(true);
         p.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
-        p.setTextAlign(Paint.Align.CENTER);
+        p.setTextAlign(align);
         p.setColor(color);
 
         // measure full text width including spaces
@@ -35,7 +40,20 @@ public class DrawUtils {
         w = p.measureText(text);
         fm = p.getFontMetrics();
 
-        float x = envelop.centerX(); // - w / 2f;
+        float x = 0;
+        if (align.equals(Paint.Align.LEFT)) {
+
+            x = envelop.centerX() - w / 2f;
+
+        } else if (align.equals(Paint.Align.CENTER)) {
+
+            x = envelop.centerX();
+
+        } else {
+
+            throw new IllegalStateException();
+        }
+
         float baseline = envelop.centerY() - (fm.ascent + fm.descent) / 2f;
 
         c.drawText(text, x, baseline, p);
