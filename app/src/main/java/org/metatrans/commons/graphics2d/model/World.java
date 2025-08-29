@@ -93,7 +93,7 @@ public abstract class World implements IWorld {
 
 	private transient I2DBitmapCache bitmap_cache;
 
-	private Entity2D_Frame popup_frame;
+	private List<Entity2D_Frame> popup_frames;
 
 	private boolean stopped;
 
@@ -102,6 +102,8 @@ public abstract class World implements IWorld {
 
 		maze_size_x = _maze_size_x;
 		maze_size_y = _maze_size_y;
+
+		popup_frames = new ArrayList<>();
 
 		init(_activity);
 	}
@@ -243,11 +245,9 @@ public abstract class World implements IWorld {
 	@Override
 	public Entity2D_Clickable getClickableEntity(float x, float y) {
 
-		Entity2D_Frame popup_frame = getPopupFrame();
+		if (getPopupFrames().size() > 0) {
 
-		if (popup_frame != null) {
-
-			return popup_frame;
+			return getPopupFrames().get(getPopupFrames().size() - 1);
 		}
 
 		int total_x = (int) (getCamera().left + x);
@@ -308,6 +308,11 @@ public abstract class World implements IWorld {
 				}
 
 				clickableEntities.add((Entity2D_Clickable) entity);
+
+				if (entity instanceof Entity2D_Frame) {
+
+					popup_frames.add((Entity2D_Frame) entity);
+				}
 			}
 
 			//System.out.println("Adding 2D moving entity: " + entity);
@@ -472,12 +477,13 @@ public abstract class World implements IWorld {
 		}
 
 
-		Entity2D_Frame frame = getPopupFrame();
+		List<Entity2D_Frame> frames = getPopupFrames();
 
-		if (frame != null) {
+		for (int i = 0; i < frames.size(); i++) {
 
-			frame.draw(canvas);
+			frames.get(i).draw(canvas);
 		}
+
 
 		canvas.restore();
 		
@@ -575,6 +581,7 @@ public abstract class World implements IWorld {
 	public synchronized void removeMovingEntity(Entity2D_Moving entity) {
 		movingEntities.remove(entity);
 		clickableEntities.remove(entity);
+		popup_frames.remove(entity);
 	}
 	
 	
@@ -806,25 +813,8 @@ public abstract class World implements IWorld {
 	}
 
 
-	public Entity2D_Frame getPopupFrame() {
+	public List<Entity2D_Frame> getPopupFrames() {
 
-		return popup_frame;
-	}
-
-
-	public void setPopupFrame(Entity2D_Frame frame) {
-
-		if (popup_frame != null) {
-
-			throw new IllegalStateException();
-		}
-
-		popup_frame = frame;
-	}
-
-
-	public void clearPopupFrame() {
-
-		popup_frame = null;
+		return popup_frames;
 	}
 }

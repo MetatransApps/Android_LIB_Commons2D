@@ -12,10 +12,16 @@ public class DrawUtils {
 
     public static void drawTextInRectangle(Canvas c, Paint p, RectF envelop, String text, int color) {
 
-        drawTextInRectangle(c, p, envelop, text, color, Paint.Align.CENTER);
+        drawTextInRectangle(c, p, envelop, text, color, Paint.Align.CENTER, -1);
     }
 
+
     public static void drawTextInRectangle(Canvas c, Paint p, RectF envelop, String text, int color, Paint.Align align) {
+
+        drawTextInRectangle(c, p, envelop, text, color, align, -1);
+    }
+
+    public static void drawTextInRectangle(Canvas c, Paint p, RectF envelop, String text, int color, Paint.Align align, int text_size) {
 
         p.setAntiAlias(true);
         p.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
@@ -36,6 +42,12 @@ public class DrawUtils {
 
         float finalSize = probeSize * scale;
         p.setTextSize(finalSize);
+
+        if (text_size != -1) {
+
+            p.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL));
+            p.setTextSize(text_size);
+        }
 
         w = p.measureText(text);
         fm = p.getFontMetrics();
