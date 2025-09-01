@@ -36,9 +36,14 @@ public abstract class Entity2D_Frame_Closeable extends Entity2D_Frame {
         if (x > envelop_close_left && x < envelop_close_right
             && y > envelop_close_top && y < envelop_close_bottom) {
 
+            onClose();
+
             getWorld().removeMovingEntity(this);
         }
     }
+
+
+    protected abstract void onClose();
 
 
     @Override
